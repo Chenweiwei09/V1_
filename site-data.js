@@ -1,0 +1,19 @@
+/* 編輯這個檔案就能新增教材分類、課次與活動。請保留每個 id 不重複。 */
+window.SITE_DATA = {
+  siteTitle: "資源教室小教具",
+  subtitle: "把每一次練習，變成一點點的成長。",
+  footerCredit: "Made with ♡ by weiwei 老師",
+  subjects: [
+    {id:"math6", title:"南一數學六年級", publisher:"南一", subject:"數學", grade:"六年級", emoji:"🧮", tone:"peach", lessons:[]},
+    {id:"chinese5", title:"南一國語五年級", publisher:"南一", subject:"國語", grade:"五年級", emoji:"📖", tone:"sage", lessons:[
+      {id:"l1", title:"第一課｜幸福筆記本", activities:[]},
+      {id:"l2", title:"第二課｜做人做事做長久", activities:[]},
+      {id:"l3", title:"第三課｜孔雀錯了", activities:[]},
+      {id:"l4", title:"第四課｜特別的海", activities:[{id:"mindmap",title:"互動心智圖",description:"閱讀心智圖，拖曳答案卡片完成分支",type:"拖曳遊戲",url:"games/l4.html"}]},
+      {id:"l5", title:"第五課｜漫遊花東", activities:[{id:"mindmap",title:"互動心智圖",description:"探索花東景色與課文重點",type:"拖曳遊戲",url:"games/l5.html"}]},
+      {id:"l6", title:"第六課｜護送螃蟹過馬路", activities:[{id:"mindmap",title:"互動心智圖",description:"認識陸蟹與護蟹行動",type:"拖曳遊戲",url:"games/l6.html"}]}
+    ]},
+    {id:"math1", title:"翰林數學一年級", publisher:"翰林", subject:"數學", grade:"一年級", emoji:"🔢", tone:"sky", lessons:[]},
+    {id:"chinese6", title:"翰林國語六年級", publisher:"翰林", subject:"國語", grade:"六年級", emoji:"✏️", tone:"lilac", lessons:[]}
+  ]
+};

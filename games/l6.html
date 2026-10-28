@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta name="robots" content="noindex, nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第六課｜護送螃蟹過馬路｜完整拖曳心智圖</title><style>
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:#eaf0f5;font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;color:#171d27}
+#stage{width:1440px;height:900px;position:absolute;transform-origin:top left;background:#f7f9fc;padding:16px 24px;overflow:hidden}
+.top{height:65px;display:flex;justify-content:space-between;align-items:flex-start}
+.title{font-weight:900;font-size:30px}
+.subtitle{font-size:15px;color:#49586b;margin-top:2px}
+.controls{display:flex;gap:8px;align-items:center}
+.controls button{border:1px solid #b5c8d5;background:white;border-radius:9px;padding:11px 15px;font-size:16px;font-weight:700;cursor:pointer}
+.controls .reset{background:#215e85;color:white}
+.choices{height:142px;padding:12px 16px;background:white;border:2px solid #dce5ed;border-radius:15px}
+.choicehead{display:flex;justify-content:space-between;font-size:17px;font-weight:800;margin-bottom:10px}
+.tip{font-size:14px;font-weight:500;color:#526073}
+.choicegrid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.choice{border:2px solid #8ec8d2;background:#ecfbfd;border-radius:10px;min-height:68px;display:flex;align-items:center;justify-content:center;gap:5px;padding:5px;text-align:center;font-size:17px;font-weight:800;cursor:grab;user-select:none;touch-action:none}
+.choice .code{color:#146b7f;font-size:13px}
+.choice.active{background:#c8f0ed;border-color:#057c96;box-shadow:0 0 0 3px #21a5b92a}
+.choice.done{visibility:hidden}
+.feedback{height:33px;display:flex;justify-content:space-between;align-items:center;padding:4px 10px;font-size:16px;font-weight:700}
+.map{height:607px;display:grid;grid-template-columns:1fr 215px 1fr;grid-template-rows:1fr 130px;gap:13px}
+.branch{border:2px solid;border-radius:17px;background:white;overflow:hidden;padding:13px 15px}
+.left{border-color:#65a975;background:#f7fff7;grid-column:1;grid-row:1}
+.right{border-color:#c78691;background:#fff9fb;grid-column:3;grid-row:1}
+.mid{grid-column:2;grid-row:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px}
+.center{background:#f1efc8;border:3px solid #9c9960;border-radius:100px;padding:28px 16px;text-align:center;width:100%;font-size:26px;font-weight:900}
+.core{font-size:19px;font-weight:800;color:#42556e;text-align:center}
+.branchhead{font-size:23px;font-weight:900;text-align:center;border-bottom:2px solid #bfd9c6;padding-bottom:7px;margin-bottom:7px}
+.right .branchhead{border-color:#e2c3ca}
+.group{display:grid;grid-template-columns:92px 1fr;align-items:start;margin:7px 0;gap:10px}
+.groupname{color:#356642;background:#def0e2;border-radius:7px;padding:6px 5px;text-align:center;font-size:17px;font-weight:850}
+.right .groupname{color:#7f4852;background:#f7e3e8}
+.groupbody{font-size:17px;line-height:1.58;font-weight:650}
+.line{margin:2px 0}
+.nest{margin-left:10px;border-left:3px solid #cde2d2;padding-left:10px}
+.right .nest{border-color:#edd7dd}
+.small{font-size:14px;color:#435365}
+.pill{display:inline-block;padding:2px 9px;border-radius:7px;background:#e8ebff;border:1px solid #bbc4e7;margin:2px 0}
+.slot{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;min-width:160px;min-height:32px;border:2px dashed #159dad;border-radius:8px;background:#fff;text-align:center;padding:3px 7px;cursor:pointer;font-size:16px;white-space:nowrap;font-weight:850}
+.slot::before{content:'Q' attr(data-no) '　拖到這裡';color:#4f8e98;font-size:13px}
+.slot.hover{background:#c8faf0}
+.slot.filled{border:0;background:transparent;color:#000;padding:0;min-width:0;min-height:0;border-radius:0;cursor:default;box-shadow:none}
+.slot.filled::before{display:none}
+.slot:focus-visible,.choice:focus-visible{outline:3px solid orange}
+.conclusion{grid-column:1/4;grid-row:2;background:#fff5f8;border:2px solid #d4a0b3;border-radius:16px;display:grid;grid-template-columns:145px 1fr;align-items:center;gap:12px;padding:12px 20px}
+.conclusion .label{font-size:24px;font-weight:900;color:#a34368;text-align:center}
+.summary{font-size:20px;line-height:1.7;font-weight:750}
+.ghost{position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%);background:#d8f7fa;border:2px solid #1b94ae;border-radius:10px;padding:10px 17px;font-size:19px;font-weight:900;box-shadow:0 8px 22px #0003}
+.complete{color:#087948}.wrong{color:#ad492a}
+.tag{background:#31b9a6;color:white;padding:2px 6px;border-radius:5px;font-size:13px;margin-right:6px}
+/* 高對比黑字 */
+.choice, .choice span, .choice .code, .choice.active, .choice.active span, .ghost { color:#000 !important; }
+.slot.filled, .slot.filled * { color:#000 !important; }
+</style></head><body><main id="stage"><div class="top"><div><div class="title">第六課｜護送螃蟹過馬路 <span style="font-size:19px;font-weight:650">范欽慧</span></div><div class="subtitle">完整心智圖・上方答案圖卡 → 下方對應空格｜填對後答案以黑字融入心智圖</div></div><div class="controls"><button class="reset" id="reset">重新開始</button><button id="reveal">顯示答案</button><button id="fullscreen">全螢幕</button></div></div><section class="choices"><div class="choicehead"><span>答案圖卡（已打亂）</span><span class="tip">直接拖曳，也可以先點圖卡、再點空格</span></div><div class="choicegrid" id="cards"></div></section><div class="feedback"><span id="message">請選擇一張答案圖卡，放入對應的空格。</span><span id="progress">0 / 7 已完成</span></div><section class="map"><article class="branch left"><div class="branchhead">護蟹行動</div>
+<div class="group"><div class="groupname">名稱</div><div class="groupbody"><span class="slot" data-target="q2" data-no="2" tabindex="0"></span></div></div>
+<div class="group"><div class="groupname">時間</div><div class="groupbody">月圓之日<br>傍晚六點</div></div>
+<div class="group"><div class="groupname">地點</div><div class="groupbody">臺二十六號線　<span class="slot" data-target="q3" data-no="3" tabindex="0"></span></div></div>
+<div class="group"><div class="groupname">遠觀</div><div class="groupbody">黑夜<br>手電筒<br>小水溝<br><span class="slot" data-target="q4" data-no="4" tabindex="0"></span></div></div>
+<div class="group"><div class="groupname">近察</div><div class="groupbody">蹲低身體<br>螃蟹腹部<br><span class="slot" data-target="q5" data-no="5" tabindex="0"></span></div></div>
+<div class="group"><div class="groupname">習性</div><div class="groupbody">農曆七月至十月，<br>母蟹會至海邊釋放寶寶</div></div>
+<div class="group"><div class="groupname">棲息地</div><div class="groupbody">近海<br>河川下游河岸<br>海岸林下</div></div>
+<div class="group"><div class="groupname">任務</div><div class="groupbody">擋住經過車輛，<br>讓螃蟹平安過馬路</div></div>
+</article><div class="mid"><div class="center">護送螃蟹<br>過馬路</div><div class="core">主軸：認識陸蟹，參與護蟹行動，完成護送任務。</div></div><article class="branch right"><div class="branchhead">陸蟹／降海釋幼</div>
+<div class="group"><div class="groupname">常見種類</div><div class="groupbody"><span class="slot" data-target="q1" data-no="1" tabindex="0"></span></div></div>
+<div class="group"><div class="groupname">特性</div><div class="groupbody">生活在陸地上<br>懷孕的母蟹到海邊釋放寶寶</div></div>
+<div class="group"><div class="groupname">寶寶的生長</div><div class="groupbody">1. 在海洋中經過幾次脫殼<br>2. 變成小螃蟹<br>3. 回到父母生活的地方</div></div>
+<div class="group"><div class="groupname">降海釋幼<br>地點</div><div class="groupbody">墾丁國家公園</div></div>
+<div class="group"><div class="groupname">時間／期間</div><div class="groupbody">太陽下山後<br>月圓之日</div></div>
+<div class="group"><div class="groupname">原因</div><div class="groupbody">滿月時，海水漲潮，<br>可以少走一大段路</div></div>
+</article><div class="conclusion"><div class="label">任務完成</div><div class="summary">蟹媽媽歷盡千辛萬苦送寶寶到海洋<br>人類盡一分微小的力量幫助螃蟹<br><span class="tag">Q6</span>作者最後呼籲大家：<span class="slot" data-target="q6" data-no="6" tabindex="0"></span><br><span class="small">文體：<span class="slot" data-target="type" data-no="文體" tabindex="0"></span></span></div></div></section></main>
+<script>
+const items=[
+  {id:'a',text:'中型仿相手蟹',target:'q1'},
+  {id:'b',text:'墾丁',target:'q3'},
+  {id:'c',text:'像泥沙球',target:'q5'},
+  {id:'d',text:'「被煮熟的」螃蟹',target:'q4'},
+  {id:'e',text:'一起參加這項有意義的活動',target:'q6'},
+  {id:'f',text:'護送螃蟹過馬路',target:'q2'},
+  {id:'g',text:'記敘文本',target:'type'}
+];
+const slots=[...document.querySelectorAll('.slot')],solved=new Map();let active=null,drag=null,ghost=null;
+const cards=document.getElementById('cards'),message=document.getElementById('message'),progress=document.getElementById('progress');
+function fit(){let s=Math.min(window.innerWidth/1440,window.innerHeight/900);document.getElementById('stage').style.transform=`scale(${s})`;document.getElementById('stage').style.left=((window.innerWidth-1440*s)/2)+'px';document.getElementById('stage').style.top=((window.innerHeight-900*s)/2)+'px'}
+window.addEventListener('resize',fit);fit();
+function repaint(){
+  cards.innerHTML='';
+  items.forEach((c,i)=>{
+    let b=document.createElement('button');
+    b.className='choice'+(active===c.id?' active':'')+(solved.has(c.id)?' done':'');
+    b.disabled=solved.has(c.id);
+    b.innerHTML='<span class="code">'+String.fromCharCode(65+i)+'.</span><span>'+c.text+'</span>';
+    b.addEventListener('click',()=>{if(drag?.moved)return;active=c.id;repaint();message.textContent='已選「'+c.text+'」，請點擊心智圖空格。'});
+    b.addEventListener('pointerdown',e=>begin(e,c,b));
+    cards.appendChild(b)
+  });
+  progress.textContent=solved.size+' / 7 已完成'
+}
+function place(id,slot){
+  if(!id||!slot||slot.classList.contains('filled')) return;
+  let c=items.find(x=>x.id===id);
+  if(!c) return;
+  if(c.target!==slot.dataset.target){message.innerHTML='<span class="wrong">這一格不對，再試一次。</span>';return}
+  slot.textContent=c.text;
+  slot.classList.add('filled');
+  solved.set(c.id,c.target);
+  active=null;
+  repaint();
+  message.innerHTML='<span class="complete">答對！文字已融入心智圖。</span>';
+  if(solved.size===7) message.innerHTML='<span class="complete">全部完成！現在已呈現完整教用答案。</span>';
+}
+slots.forEach(s=>{
+  s.addEventListener('click',()=>place(active,s));
+  s.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();place(active,s)}})
+});
+function begin(e,c,b){
+  if(solved.has(c.id)||e.button>0) return;
+  drag={id:c.id,x:e.clientX,y:e.clientY,moved:false};
+  try{b.setPointerCapture(e.pointerId)}catch{}
+  const move=ev=>{
+    if(!drag) return;
+    if(!drag.moved&&Math.hypot(ev.clientX-drag.x,ev.clientY-drag.y)<8) return;
+    drag.moved=true;
+    if(!ghost){ghost=document.createElement('div');ghost.className='ghost';ghost.textContent=c.text;document.body.appendChild(ghost)}
+    ghost.style.left=ev.clientX+'px';
+    ghost.style.top=ev.clientY+'px';
+    slots.forEach(s=>s.classList.remove('hover'));
+    let t=document.elementFromPoint(ev.clientX,ev.clientY)?.closest('.slot');
+    if(t&&!t.classList.contains('filled')) t.classList.add('hover');
+  };
+  const end=ev=>{
+    b.removeEventListener('pointermove',move);
+    b.removeEventListener('pointerup',end);
+    b.removeEventListener('pointercancel',end);
+    slots.forEach(s=>s.classList.remove('hover'));
+    let moved=drag?.moved;
+    if(ghost){ghost.remove();ghost=null}
+    if(moved){
+      let t=document.elementFromPoint(ev.clientX,ev.clientY)?.closest('.slot');
+      place(c.id,t);
+      setTimeout(()=>drag=null,0)
+    } else drag=null;
+  };
+  b.addEventListener('pointermove',move);
+  b.addEventListener('pointerup',end);
+  b.addEventListener('pointercancel',end);
+}
+document.getElementById('reset').onclick=()=>{
+  solved.clear();active=null;
+  slots.forEach(s=>{s.textContent='';s.classList.remove('filled')});
+  message.textContent='已重設。';
+  repaint()
+};
+document.getElementById('reveal').onclick=()=>{
+  items.forEach(c=>{
+    if(!solved.has(c.id)){
+      const s=slots.find(x=>x.dataset.target===c.target);
+      s.textContent=c.text;
+      s.classList.add('filled');
+      solved.set(c.id,c.target)
+    }
+  });
+  active=null;repaint();message.textContent='已顯示全部答案。'
+};
+document.getElementById('fullscreen').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.();
+repaint();
+</script></body></html>
