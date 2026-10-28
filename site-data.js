@@ -4,8 +4,31 @@ window.SITE_DATA = {
   subtitle: "把每一次練習，變成一點點的成長。",
   footerCredit: "Made with ♡ by weiwei 老師",
   subjects: [
-    {id:"math6", title:"南一數學六年級", publisher:"南一", subject:"數學", grade:"六年級", emoji:"🧮", tone:"peach", lessons:[]},
-    {id:"chinese5", title:"南一國語五年級", publisher:"南一", subject:"國語", grade:"五年級", emoji:"📖", tone:"sage", lessons:[
+    {
+  id: "math6",
+  title: "南一數學六年級",
+  publisher: "南一",
+  subject: "數學",
+  grade: "六年級",
+  emoji: "🧮",
+  tone: "peach",
+  lessons: [
+    {
+      id: "ch1",
+      title: "第一單元｜質因數分解和短除法",
+      activities: [
+        {
+          id: "fractions-game",
+          title: "質因數分解和短除法",
+          description: "複習質因數分解的概念，並練習短除法的技巧",
+          type: "互動遊戲",
+          url: "games/G6U1math.html"
+        }
+      ]
+    }
+  ]
+}, 
+   {id:"chinese5", title:"南一國語五年級", publisher:"南一", subject:"國語", grade:"五年級", emoji:"📖", tone:"sage", lessons:[
       {id:"l1", title:"第一課｜幸福筆記本", activities:[]},
       {id:"l2", title:"第二課｜做人做事做長久", activities:[]},
       {id:"l3", title:"第三課｜孔雀錯了", activities:[]},
