@@ -49,6 +49,13 @@ window.SITE_DATA = {
       description: "18個生字闖關，包含初階看字、中階組字及進階手寫練習",
       type: "識字遊戲",
       url: "games/G5L4生字.html"
+    },
+    {
+      id: "character-game2",
+      title: "寫寫生字",
+      description: "18個生字手寫練習，包含筆順提示與書寫範例",
+      type: "寫字遊戲",
+      url: "games/G5L4生字書寫.html"
     }
   ]
 },
