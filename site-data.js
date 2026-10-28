@@ -32,6 +32,7 @@ window.SITE_DATA = {
       {id:"G5L1", title:"第一課｜幸福筆記本", activities:[]},
       {id:"G5L2", title:"第二課｜做人做事做長久", activities:[]},
       {id:"G5L3", title:"第三課｜孔雀錯了", activities:[]},
+
 {
   id: "G5L4",
   title: "第四課｜特別的海",
@@ -46,7 +47,7 @@ window.SITE_DATA = {
     {
       id: "character-game",
       title: "識字大挑戰",
-      description: "18個生字闖關，包含初階看字、中階組字及進階手寫練習",
+      description: "18個生字闖關，初階看字、中階組字及進階手寫",
       type: "識字遊戲",
       url: "games/G5L4生字.html"
     },
@@ -56,9 +57,38 @@ window.SITE_DATA = {
       description: "18個生字手寫練習，包含筆順提示與書寫範例",
       type: "寫字遊戲",
       url: "games/G5L4生字書寫.html"
+    },
+    {
+      id: "slides-preview",
+      title: "第四課教學簡報",
+      description: "線上觀看第四課的教學投影片",
+      type: "教學簡報",
+      url: "materials/G5L4/slides.pdf"
+    },
+    {
+      id: "slides-download",
+      title: "下載教學簡報 PPT",
+      description: "下載可編輯的 PowerPoint 簡報",
+      type: "PPT下載",
+      url: "materials/G5L4/G5 L4複習.pptx"
+    },
+    {
+      id: "worksheet-preview",
+      title: "第四課學習單",
+      description: "線上瀏覽、列印第四課學習單",
+      type: "PDF學習單",
+      url: "materials/G5L4/G5 L4 複習學習單+語詞.docx"
+    },
+    {
+      id: "worksheet-download",
+      title: "測試版本沒東西",
+      description: "下載 Word 格式，方便教師修改",
+      type: "Word學習單",
+      url: "materials/G5L4/G5 L4 複習學習單+語詞.docx"
     }
   ]
 },
+
       {id:"G5L5", title:"第五課｜漫遊花東", activities:[{id:"mindmap",title:"互動心智圖",description:"探索花東景色與課文重點",type:"拖曳遊戲",url:"games/G5L5.html"}]},
       {id:"G5L6", title:"第六課｜護送螃蟹過馬路", activities:[{id:"mindmap",title:"互動心智圖",description:"認識陸蟹與護蟹行動",type:"拖曳遊戲",url:"games/G5L6.html"}]}
     ]},
