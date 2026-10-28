@@ -42,7 +42,7 @@ window.SITE_DATA = {
       title: "互動心智圖",
       description: "閱讀心智圖，拖曳答案卡片完成分支",
       type: "拖曳遊戲",
-      url: "games/G5L4.html"
+      url: "games/G5L4心智圖.html"
     },
     {
       id: "character-game",
@@ -89,8 +89,8 @@ window.SITE_DATA = {
   ]
 },
 
-      {id:"G5L5", title:"第五課｜漫遊花東", activities:[{id:"mindmap",title:"互動心智圖",description:"探索花東景色與課文重點",type:"拖曳遊戲",url:"games/G5L5.html"}]},
-      {id:"G5L6", title:"第六課｜護送螃蟹過馬路", activities:[{id:"mindmap",title:"互動心智圖",description:"認識陸蟹與護蟹行動",type:"拖曳遊戲",url:"games/G5L6.html"}]}
+      {id:"G5L5", title:"第五課｜漫遊花東", activities:[{id:"mindmap",title:"互動心智圖",description:"探索花東景色與課文重點",type:"拖曳遊戲",url:"games/G5L5心智圖.html"}]},
+      {id:"G5L6", title:"第六課｜護送螃蟹過馬路", activities:[{id:"mindmap",title:"互動心智圖",description:"認識陸蟹與護蟹行動",type:"拖曳遊戲",url:"games/G5L6心智圖.html"}]}
     ]},
     {id:"math1", title:"翰林數學一年級", publisher:"翰林", subject:"數學", grade:"一年級", emoji:"🔢", tone:"sky", lessons:[]},
     {id:"chinese6", title:"翰林國語六年級", publisher:"翰林", subject:"國語", grade:"六年級", emoji:"✏️", tone:"lilac", lessons:[]}
