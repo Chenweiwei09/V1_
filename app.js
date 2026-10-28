@@ -10,7 +10,7 @@ function home(){
 }
 function subject(s){
  const lessons=s.lessons||[];
- app.innerHTML=`<nav class="crumb"><a href="#/">首頁</a><span>›</span><strong>${h(s.title)}</strong></nav><h1 class="page-title">${h(s.emoji)} ${h(s.title)}</h1><p class="page-desc">選擇要練習的課次，進入後就能查看這一課的小遊戲與心智圖。</p>${lessons.length?`<div class="lesson-grid">${lessons.map((l,i)=>`<button class="lesson-card" data-lesson="${h(l.id)}"><span class="number">LESSON ${String(i+1).padStart(2,'0')}</span><h3>${h(l.title)}</h3><span class="bottom">${(l.activities||[]).length?'查看 '+l.activities.length+' 個教材 →':'教材準備中 →'}</span></button>`).join('')}</div>`:`<div class="empty"><div class="icon">🌱</div><h3>這個科目的小教具正在準備中</h3><p>之後只要在 site-data.js 加上課次，這裡就會自動出現。</p><a href="#/" class="secondary-link">返回首頁</a></div>`}`;
+ app.innerHTML=`<nav class="crumb"><a href="#/">首頁</a><span>›</span><strong>${h(s.title)}</strong></nav><h1 class="page-title">${h(s.emoji)} ${h(s.title)}</h1><p class="page-desc">選擇要練習的課次，進入後就能查看這一課的小教具。</p>${lessons.length?`<div class="lesson-grid">${lessons.map((l,i)=>`<button class="lesson-card" data-lesson="${h(l.id)}"><span class="number">LESSON ${String(i+1).padStart(2,'0')}</span><h3>${h(l.title)}</h3><span class="bottom">${(l.activities||[]).length?'查看 '+l.activities.length+' 個教材 →':'教材準備中 →'}</span></button>`).join('')}</div>`:`<div class="empty"><div class="icon">🌱</div><h3>這個科目的小教具正在準備中</h3><p>之後只要在 site-data.js 加上課次，這裡就會自動出現。</p><a href="#/" class="secondary-link">返回首頁</a></div>`}`;
  app.querySelectorAll('[data-lesson]').forEach(b=>b.onclick=()=>location.hash=link('subject/'+encodeURIComponent(s.id)+'/lesson/'+encodeURIComponent(b.dataset.lesson)));
 }
 function lesson(s,l){const activities=l.activities||[];
