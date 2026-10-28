@@ -1,8 +1,8 @@
 /* 編輯這個檔案就能新增教材分類、課次與活動。請保留每個 id 不重複。 */
 window.SITE_DATA = {
-  siteTitle: "資源教室小教具",
-  subtitle: "把每一次練習，變成一點點的成長。",
-  footerCredit: "Made with ♡ by weiwei 老師",
+  siteTitle: "學習教室小教具",
+  subtitle: "希望這裡的東西可以越來越多，幫助老師與學生更快樂地學習",
+  footerCredit: "Made with ♡ by weiwei ",
   subjects: [
     {
   id: "math6",
