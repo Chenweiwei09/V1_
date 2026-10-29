@@ -177,7 +177,22 @@ window.SITE_DATA = {
         {
           id: "G6L3",
           title: "第三課｜孔子說的話",
-          activities: []
+          activities: [
+           {
+              id: "G6L3-characters",
+              title: "第三課生字遊戲",
+              description: "練習第三課生字，透過互動活動加強識字能力",
+              type: "識字遊戲",
+              url: "games/G6L3生字.html"
+            },
+            {
+              id: "G6L3-characters2",
+              title: "寫寫生字",
+              description: "練習寫寫第三課的生字，包含筆順提示與書寫範例",
+              type: "識字遊戲",
+              url: "games/G6L3生字書寫.html"
+            }
+          ]
         },
         {
           id: "G6L4",
