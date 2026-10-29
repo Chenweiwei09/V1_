@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第二課《為什麼大家不理我》識字大挑戰</title>
+    <style>
+        :root {
+            --primary-blue: #1d3557;
+            --accent-blue: #457b9d;
+            --light-blue: #e0f2fe;
+            --selected-blue: #bae6fd;
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --success-green: #2a9d8f;
+            --success-light: #d4edda;
+            --error-red: #e63946;
+            --error-light: #f8d7da;
+            --warning-orange: #f4a261;
+            --border-radius: 16px;
+            --font-main: "BiauKai", "標楷體", "DFKai-SB", "Microsoft JhengHei", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            font-family: var(--font-main);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+        }
+
+        /* A. 標題與操作列 */
+        .header-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .main-title {
+            font-size: 2.2rem;
+            color: var(--primary-blue);
+            margin: 0;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .control-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .btn-nav {
+            background-color: #e9ecef;
+            color: var(--primary-blue);
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-nav.next-active {
+            background-color: var(--success-green);
+            color: white;
+            box-shadow: 0 4px 12px rgba(42, 157, 143, 0.4);
+        }
+
+        .progress-pill {
+            background-color: #f1f5f9;
+            color: #2563eb;
+            border: 1px solid #cbd5e1;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2a9d8f);
+            width: 5%;
+            transition: width 0.3s ease;
+        }
+
+        /* B. 生字提示區 */
+        .word-prompt-card {
+            background-color: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .word-display-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .target-word-box {
+            width: 85px;
+            height: 85px;
+            border: 3px dashed #cbd5e1;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3.2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .target-word-box.completed {
+            border: 3px solid var(--success-green);
+            color: var(--success-green);
+            box-shadow: 0 0 15px rgba(42, 157, 143, 0.3);
+            background-color: #f0fdf4;
+        }
+
+        .context-word-box {
+            width: 75px;
+            height: 75px;
+            border: 2px solid #cbd5e1;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.6rem;
+            font-weight: bold;
+            color: #1e293b;
+            background-color: white;
+        }
+
+        .zhuyin-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.1;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2563eb;
+            background-color: #dbeafe;
+            padding: 6px 10px;
+            border-radius: 12px;
+            min-width: 38px;
+            position: relative;
+        }
+
+        .tone-mark {
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+        }
+
+        .instruction-badge {
+            background-color: #fef3c7;
+            color: #92400e;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: 1px solid #fde68a;
+        }
+
+        /* C. 國字組合區 */
+        .assembly-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            min-height: 110px;
+        }
+
+        .assembly-slots-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .component-slot {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed #94a3b8;
+            border-radius: 16px;
+            background-color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .component-slot.filled {
+            border: 2px solid var(--accent-blue);
+            background-color: var(--selected-blue);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        }
+
+        .component-slot.error-slot {
+            border: 2px solid var(--error-red);
+            background-color: var(--error-light);
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .slot-step-tag {
+            position: absolute;
+            bottom: -22px;
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .operator-equal {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #94a3b8;
+        }
+
+        .result-preview-box {
+            width: 90px;
+            height: 90px;
+            border: 2px solid #cbd5e1;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #cbd5e1;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+        }
+
+        .result-preview-box.completed {
+            border-color: var(--success-green);
+            color: var(--success-green);
+            box-shadow: 0 0 15px rgba(42, 157, 143, 0.3);
+        }
+
+        /* D. 部件選擇區 */
+        .selection-section {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cards-flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .component-card {
+            width: 75px;
+            height: 75px;
+            background-color: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            cursor: pointer;
+            box-shadow: 0 6px 0px #cbd5e1;
+            transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s;
+        }
+
+        .component-card:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0px #cbd5e1;
+        }
+
+        .component-card.used {
+            opacity: 0.25;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            background-color: #e2e8f0;
+        }
+
+        .component-card.shake {
+            animation: shake 0.4s ease-in-out;
+            border-color: var(--error-red);
+            background-color: var(--error-light);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        /* E. 即時回饋區 */
+        .feedback-banner {
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .feedback-banner.normal { background-color: #f1f5f9; color: #475569; }
+        .feedback-banner.success { background-color: var(--success-light); color: #0f5132; }
+        .feedback-banner.error { background-color: var(--error-light); color: #842029; }
+
+        /* 教師設定面板 & 模態框 */
+        .teacher-toggle-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.2s;
+        }
+        .teacher-toggle-btn:hover { opacity: 1; }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-body {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh;
+            border-radius: 20px;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* 通關恭喜卡片特別樣式 */
+        .congrats-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+            border: 3px solid var(--success-green);
+            text-align: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .congrats-title {
+            font-size: 2.5rem;
+            color: var(--success-green);
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .congrats-badge {
+            font-size: 4rem;
+            margin: 10px 0;
+        }
+
+        .congrats-stats {
+            background: white;
+            border-radius: 16px;
+            padding: 16px 24px;
+            border: 1px solid #c6f6d5;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+            width: 100%;
+            max-width: 400px;
+            font-size: 1.2rem;
+            color: #2d3748;
+            line-height: 1.8;
+        }
+
+        .btn-restart {
+            background-color: var(--success-green);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(42, 157, 143, 0.4);
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-restart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(42, 157, 143, 0.5);
+        }
+
+        .teacher-toolbar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 12px;
+        }
+
+        .teacher-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        table.editor-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        table.editor-table th, table.editor-table td {
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+            text-align: center;
+        }
+
+        table.editor-table input {
+            width: 90%;
+            padding: 4px;
+            text-align: center;
+        }
+
+        .status-verified { color: var(--success-green); font-weight: bold; }
+
+        /* 彩花碎片動畫 */
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 14px;
+            top: -20px;
+            opacity: 0.8;
+            animation: confettiFall 2.5s ease-in-out infinite;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(450px) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <button class="teacher-toggle-btn" onclick="openTeacherModal()" title="教師模式">⚙️</button>
+
+    <!-- A. 標題與操作列 -->
+    <div class="header-section">
+        <h1 class="main-title">第二課《為什麼大家不理我》識字大挑戰</h1>
+        <div class="control-bar">
+            <button class="btn-nav" id="btn-prev" onclick="prevQuestion()">⬅ 上一題</button>
+            <div class="progress-pill" id="progress-text">第 1 / 19 題</div>
+            <button class="btn-nav" id="btn-speak" onclick="replayAudio()">🔊 朗讀</button>
+            <button class="btn-nav" id="btn-next" onclick="nextQuestion()" disabled>下一題 ➡</button>
+        </div>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+    </div>
+
+    <!-- B. 生字提示區 -->
+    <div class="word-prompt-card">
+        <div class="word-display-row" id="word-display-row">
+            <!-- 動態生成目標字與詞語其他字 -->
+        </div>
+        <div class="instruction-badge" id="instruction-badge">【左右結構】請依順序選擇正確部件</div>
+    </div>
+
+    <!-- C. 國字組合區 -->
+    <div class="assembly-section">
+        <div class="assembly-slots-group" id="slots-group">
+            <!-- 動態生成部件空格 -->
+        </div>
+        <div class="operator-equal">=</div>
+        <div class="result-preview-box" id="result-preview">?</div>
+    </div>
+
+    <!-- E. 即時回饋區 -->
+    <div class="feedback-banner normal" id="feedback-banner">
+        請依照順序挑選部件。
+    </div>
+
+    <!-- D. 部件選擇區 -->
+    <div class="selection-section">
+        <div class="cards-flex-container" id="cards-container">
+            <!-- 動態生成部件卡片 -->
+        </div>
+    </div>
+</div>
+
+<!-- 恭喜全通關模態框 -->
+<div class="modal-overlay" id="congrats-modal">
+    <div class="modal-body congrats-card" id="congrats-card-body">
+        <div class="congrats-badge">🎉🏆✨</div>
+        <h2 class="congrats-title">太棒了！挑戰成功！</h2>
+        <p style="font-size: 1.2rem; color: #4a5568; margin-top: 4px;">你已經順利完成了第二課《為什麼大家不理我》所有生字！</p>
+        
+        <div class="congrats-stats" id="congrats-stats-content">
+            <!-- 動態顯示完成數據 -->
+        </div>
+
+        <button class="btn-restart" onclick="restartChallenge()">🔄 再試一次 (重新挑戰)</button>
+    </div>
+</div>
+
+<!-- 教師 modal -->
+<div class="modal-overlay" id="teacher-modal">
+    <div class="modal-body">
+        <h2>⚙️ 教師管理與學習評量面板</h2>
+        <div class="teacher-toolbar">
+            <button class="teacher-btn" onclick="toggleTeacherUnlock()" id="btn-unlock-toggle">🔓 解鎖自由跨題：關閉</button>
+            <button class="teacher-btn" onclick="exportCSV()">📊 匯出學習紀錄 (CSV)</button>
+            <button class="teacher-btn" onclick="exportJSON()">💾 匯出題庫 JSON</button>
+            <button class="teacher-btn" onclick="document.getElementById('import-file').click()">📂 匯入題庫 JSON</button>
+            <input type="file" id="import-file" style="display:none" onchange="importJSON(event)" accept=".json">
+            <button class="teacher-btn" style="background:#dc2626" onclick="resetProgress()">🔄 重設學生紀錄</button>
+        </div>
+        <h3>學生答題紀錄摘要</h3>
+        <div id="student-report-summary">尚無紀錄</div>
+        <h3>題庫編輯與查核狀態</h3>
+        <div style="overflow-x:auto;">
+            <table class="editor-table">
+                <thead>
+                    <tr>
+                        <th>序號</th>
+                        <th>生字</th>
+                        <th>注音</th>
+                        <th>課文詞語</th>
+                        <th>結構</th>
+                        <th>正確部件</th>
+                        <th>干擾部件</th>
+                        <th>狀態</th>
+                    </tr>
+                </thead>
+                <tbody id="teacher-table-body">
+                    <!-- 動態渲染表格 -->
+                </tbody>
+            </table>
+        </div>
+        <button class="teacher-btn" onclick="closeTeacherModal()" style="align-self: flex-end; margin-top:10px;">關閉面板</button>
+    </div>
+</div>
+
+<script>
+/**
+ * 六年級第二課題庫資料 (共19題)
+ */
+const initialQuestionBank = [
+    {
+        id: 1, char: "眶", zhuyin: "ㄎㄨㄤ", phrase: "眼眶", phraseZhuyin: "ㄧㄢˇ ㄎㄨㄤ",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["目", "匡"], distractors: ["日", "巨", "臣"],
+        meaning: "眼窩的邊緣。", difficulty: "簡單", status: "已核對", note: ""
+    },
+    {
+        id: 2, char: "固", zhuyin: "ㄍㄨˋ", phrase: "固執", phraseZhuyin: "ㄍㄨˋ ㄓˊ",
+        structure: "全包圍結構", stepHints: ["外", "內"], components: ["囗", "古"], distractors: ["口", "占", "舌"],
+        meaning: "堅持己見，不肯變通。", difficulty: "簡單", status: "已核對", note: ""
+    },
+    {
+        id: 3, char: "執", zhuyin: "ㄓˊ", phrase: "固執", phraseZhuyin: "ㄍㄨˋ ㄓˊ",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["幸", "丸"], distractors: ["土", "九", "凡"],
+        meaning: "堅持己見，不肯變通。", difficulty: "中等", status: "已核對", note: ""
+    },
+    {
+        id: 4, char: "辯", zhuyin: "ㄅㄧㄢˋ", phrase: "辯論", phraseZhuyin: "ㄅㄧㄢˋ ㄌㄨㄣˋ",
+        structure: "左中右結構", stepHints: ["左", "中", "右"], components: ["辛", "言", "辛"], distractors: ["辡", "糸", "舌"],
+        meaning: "雙方針對特定的主題，各自發表見解，以駁倒對方為目的。", difficulty: "困難", status: "已核對", note: ""
+    },
+    {
+        id: 5, char: "胞", zhuyin: "ㄅㄠ", phrase: "雙胞胎", phraseZhuyin: "ㄕㄨㄤ ㄅㄠ ㄊㄞ",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["月", "包"], distractors: ["舟", "句", "巳"],
+        meaning: "同一次懷孕所生下的兩個胎兒。", difficulty: "簡單", status: "已核對", note: ""
+    },
+    {
+        id: 6, char: "胎", zhuyin: "ㄊㄞ", phrase: "雙胞胎", phraseZhuyin: "ㄕㄨㄤ ㄅㄠ ㄊㄞ",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["月", "台"], distractors: ["舟", "占", "厶"],
+        meaning: "同一次懷孕所生下的兩個胎兒。", difficulty: "簡單", status: "已核對", note: ""
+    },
+    {
+        id: 7, char: "郵", zhuyin: "ㄧㄡˊ", phrase: "郵票", phraseZhuyin: "ㄧㄡˊ ㄆㄧㄠˋ",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["垂", "阝"], distractors: ["千", "卩", "阜"],
+        meaning: "郵政機關發行，供寄遞郵件貼用的票證。", difficulty: "中等", status: "已核對", note: ""
+    },
+    {
+        id: 8, char: "暈", zhuyin: "ㄩㄣ", phrase: "暈倒", phraseZhuyin: "ㄩㄣ ㄉㄠˇ",
+        structure: "上下結構", stepHints: ["上", "下"], components: ["日", "軍"], distractors: ["目", "車", "曰"],
+        meaning: "昏迷倒下。", difficulty: "簡單", status: "已核對", note: ""
+    },
+    {
+        id: 9, char: "稚", zhuyin: "ㄓˋ", phrase: "幼稚園", phraseZhuyin: "ㄧㄡˋ ㄓˋ ㄩㄢˊ",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["禾", "隹"], distractors: ["木", "住", "佳"],
+        meaning: "幼稚年幼的學童。", difficulty: "中等", status: "已核對", note: ""
+    },
+    {
+        id: 10, char: "溜", zhuyin: "ㄌㄧㄡ", phrase: "溜", phraseZhuyin: "ㄌㄧㄡ",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["氵", "留"], distractors: ["冫", "卯", "田"],
+        meaning: "悄悄離開或滑行。", difficulty: "中等", status: "已核對", note: ""
+    },
+    {
+        id: 11, char: "慘", zhuyin: "ㄘㄢˇ", phrase: "慘白", phraseZhuyin: "ㄘㄢˇ ㄅㄞˊ",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["忄", "參"], distractors: ["心", "叁", "彡"],
+        meaning: "形容面容蒼白，沒有血色。", difficulty: "中等", status: "已核對", note: ""
+    },
+    {
+        id: 12, char: "憤", zhuyin: "ㄈㄣˋ", phrase: "憤慨", phraseZhuyin: "ㄈㄣˋ ㄎㄞˇ",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["忄", "賁"], distractors: ["心", "貝", "卉"],
+        meaning: "氣憤不平。", difficulty: "困難", status: "已核對", note: ""
+    },
+    {
+        id: 13, char: "慨", zhuyin: "ㄎㄞˇ", phrase: "憤慨", phraseZhuyin: "ㄈㄣˋ ㄎㄞˇ",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["忄", "既"], distractors: ["心", "艮", "旡"],
+        meaning: "氣憤不平。", difficulty: "困難", status: "已核對", note: ""
+    },
+    {
+        id: 14, char: "狠", zhuyin: "ㄏㄣˇ", phrase: "狠狠的", phraseZhuyin: "ㄏㄣˇ ㄏㄣˇ ㄉㄜ˙",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["犭", "艮"], distractors: ["豕", "良", "見"],
+        meaning: "極度的、嚴厲的。", difficulty: "簡單", status: "已核對", note: ""
+    },
+    {
+        id: 15, char: "憂", zhuyin: "ㄧㄡ", phrase: "擔憂", phraseZhuyin: "ㄉㄢ ㄧㄡ",
+        structure: "上中下結構", stepHints: ["上", "中", "中", "中", "下"], components: ["一", " 白", "冖" ,"心" ,"夂"], distractors: ["頁", "必", "攵"],
+        meaning: "擔心、發愁。", difficulty: "困難", status: "已核對", note: ""
+    },
+    {
+        id: 16, char: "涕", zhuyin: "ㄊㄧˋ", phrase: "鼻涕", phraseZhuyin: "ㄅㄧˊ ㄊㄧˋ",
+        structure: "左右結構", stepHints: ["左", "右"], components: ["氵", "弟"], distractors: ["冫", "矛", "第"],
+        meaning: "鼻腔黏膜所分泌的液體。", difficulty: "簡單", status: "已核對", note: ""
+    },
+    {
+        id: 17, char: "寬", zhuyin: "ㄎㄨㄢ", phrase: "寬", phraseZhuyin: "ㄎㄨㄢ",
+        structure: "上中下結構", stepHints: ["上", "中", "中", "下"], components: ["宀", "艹", "見", "丶"], distractors: ["穴", "貝"],
+        meaning: "廣大、廣闊。", difficulty: "中等", status: "已核對", note: ""
+    },
+    {
+        id: 18, char: "慰", zhuyin: "ㄨㄟˋ", phrase: "慰問", phraseZhuyin: "ㄨㄟˋ ㄨㄣˋ",
+        structure: "上下結構", stepHints: ["上", "下"], components: ["尉", "心"], distractors: ["尸", "小", "寸"],
+        meaning: "安慰問候。", difficulty: "中等", status: "已核對", note: ""
+    },
+    {
+        id: 19, char: "寞", zhuyin: "ㄇㄛˋ", phrase: "寂寞", phraseZhuyin: "ㄐㄧˊ ㄇㄛˋ",
+        structure: "上下結構", stepHints: ["上", "下"], components: ["宀", "莫"], distractors: ["穴", "冥", "艹"],
+        meaning: "孤單冷清。", difficulty: "簡單", status: "已核對", note: ""
+    }
+];
+
+// 為了避免和上一課互相覆蓋，獨立修改 local storage 命名
+localStorage.removeItem("custom_q_bank_g6l2");
+localStorage.removeItem("learning_records_g6l2");
+
+// 全域狀態
+let questionBank = initialQuestionBank;
+let currentIndex = 0;
+let userStep = 0;
+let userSelections = [];
+let teacherUnlocked = false;
+
+// 學習紀錄
+let learningRecords = {};
+
+// DOM 元素
+const wordDisplayRow = document.getElementById("word-display-row");
+const instructionBadge = document.getElementById("instruction-badge");
+const slotsGroup = document.getElementById("slots-group");
+const resultPreview = document.getElementById("result-preview");
+const cardsContainer = document.getElementById("cards-container");
+const feedbackBanner = document.getElementById("feedback-banner");
+const progressText = document.getElementById("progress-text");
+const progressFill = document.getElementById("progress-fill");
+const btnPrev = document.getElementById("btn-prev");
+const btnNext = document.getElementById("btn-next");
+
+// 初始化遊戲
+function initGame() {
+    loadQuestion(currentIndex);
+}
+
+function loadQuestion(index) {
+    userStep = 0;
+    userSelections = [];
+    const q = questionBank[index];
+
+    // 紀錄初始化
+    if (!learningRecords[q.id]) {
+        learningRecords[q.id] = {
+            char: q.char,
+            attempts: 0,
+            firstCorrect: null,
+            errors: 0,
+            wrongChoices: []
+        };
+    }
+
+    // 更新 A. 標題與進度
+    progressText.innerText = `第 ${index + 1} / ${questionBank.length} 題`;
+    progressFill.style.width = `${((index + 1) / questionBank.length) * 100}%`;
+    btnPrev.disabled = (index === 0);
+    
+    const isCompleted = learningRecords[q.id].firstCorrect !== null;
+    btnNext.disabled = !isCompleted && !teacherUnlocked;
+    if (btnNext.disabled) {
+        btnNext.classList.remove("next-active");
+    } else {
+        btnNext.classList.add("next-active");
+    }
+
+    // 更新 B. 生字提示區
+    renderWordPrompt(q, isCompleted);
+
+    instructionBadge.innerText = `【${q.structure}】請依順序選擇正確部件`;
+
+    // 更新 C. 組合區空格
+    slotsGroup.innerHTML = "";
+    q.components.forEach((comp, idx) => {
+        const slot = document.createElement("div");
+        slot.className = "component-slot";
+        slot.dataset.index = idx;
+        
+        const stepTag = document.createElement("span");
+        stepTag.className = "slot-step-tag";
+        const hintText = q.stepHints && q.stepHints[idx] ? `(${q.stepHints[idx]})` : "";
+        stepTag.innerText = `第${idx+1}步${hintText}`;
+        slot.appendChild(stepTag);
+
+        slot.onclick = () => clearSlot(idx);
+        slotsGroup.appendChild(slot);
+    });
+
+    resultPreview.innerText = isCompleted ? q.char : "?";
+    if (isCompleted) {
+        resultPreview.classList.add("completed");
+    } else {
+        resultPreview.classList.remove("completed");
+    }
+
+    // 更新 D. 部件選擇區
+    cardsContainer.innerHTML = "";
+    const allOptions = shuffleArray([...q.components, ...q.distractors]);
+    allOptions.forEach((comp) => {
+        const card = document.createElement("div");
+        card.className = "component-card";
+        card.innerText = comp;
+        card.onclick = () => handleCardClick(comp, card);
+        cardsContainer.appendChild(card);
+    });
+
+    setFeedback("請依照順序挑選部件。", "normal");
+}
+
+function renderWordPrompt(q, isCompleted) {
+    wordDisplayRow.innerHTML = "";
+    const phraseChars = Array.from(q.phrase);
+    
+    phraseChars.forEach(ch => {
+        if (ch === q.char) {
+            const targetBox = document.createElement("div");
+            targetBox.className = `target-word-box ${isCompleted ? 'completed' : ''}`;
+            targetBox.id = "target-word-box";
+            targetBox.innerText = isCompleted ? q.char : "?";
+            wordDisplayRow.appendChild(targetBox);
+
+            const zhuyinBox = document.createElement("div");
+            zhuyinBox.className = "zhuyin-box";
+            renderZhuyinInto(q.zhuyin, zhuyinBox);
+            wordDisplayRow.appendChild(zhuyinBox);
+        } else {
+            const contextBox = document.createElement("div");
+            contextBox.className = "context-word-box";
+            contextBox.innerText = ch;
+            wordDisplayRow.appendChild(contextBox);
+        }
+    });
+}
+
+function renderZhuyinInto(zhuyinStr, container) {
+    container.innerHTML = "";
+    const tones = ["ˊ", "ˇ", "ˋ", "˙"];
+    let mainZhuyin = "";
+    let toneMark = "";
+
+    for (let char of zhuyinStr) {
+        if (tones.includes(char)) {
+            toneMark = char;
+        } else if (char !== " ") {
+            mainZhuyin += char + "<br>";
+        }
+    }
+    container.innerHTML = mainZhuyin;
+    if (toneMark) {
+        const toneSpan = document.createElement("span");
+        toneSpan.className = "tone-mark";
+        toneSpan.innerText = toneMark;
+        container.appendChild(toneSpan);
+    }
+}
+
+// 學生操作邏輯：允許先選取填入，填滿後才判定
+function handleCardClick(selectedChar, cardElement) {
+    if (cardElement.classList.contains("used")) return;
+
+    const q = questionBank[currentIndex];
+
+    // 填入目前步驟的空格
+    userSelections.push(selectedChar);
+    cardElement.classList.add("used");
+
+    const slots = slotsGroup.querySelectorAll(".component-slot");
+    slots[userStep].innerText = selectedChar;
+    slots[userStep].classList.add("filled");
+
+    userStep++;
+
+    // 尚未填滿所有空格時的提示
+    if (userStep < q.components.length) {
+        setFeedback("已選擇部件，請繼續選擇下一個部件。", "normal");
+        return;
+    }
+
+    // 當所有空格填滿時，進行整體判定
+    learningRecords[q.id].attempts++;
+    
+    let isAllCorrect = true;
+    let wrongIndices = [];
+
+    userSelections.forEach((userChar, idx) => {
+        if (userChar !== q.components[idx]) {
+            isAllCorrect = false;
+            wrongIndices.push(idx);
+            learningRecords[q.id].wrongChoices.push(userChar);
+        }
+    });
+
+    if (isAllCorrect) {
+        handleQuestionSuccess(q);
+    } else {
+        learningRecords[q.id].errors++;
+        setFeedback("再仔細看看，這個部件的位置對嗎？", "error");
+        speakText("再試一次看看喔");
+
+        wrongIndices.forEach(idx => {
+            slots[idx].classList.add("error-slot");
+        });
+
+        setTimeout(() => {
+            wrongIndices.reverse().forEach(idx => {
+                const wrongChar = userSelections[idx];
+                userSelections.splice(idx, 1);
+                
+                const cards = cardsContainer.querySelectorAll(".component-card");
+                cards.forEach(c => {
+                    if (c.innerText === wrongChar && c.classList.contains("used")) {
+                        c.classList.remove("used");
+                    }
+                });
+
+                slots[idx].innerText = "";
+                slots[idx].classList.remove("filled", "error-slot");
+                const stepTag = document.createElement("span");
+                stepTag.className = "slot-step-tag";
+                const hintText = q.stepHints && q.stepHints[idx] ? `(${q.stepHints[idx]})` : "";
+                stepTag.innerText = `第${idx+1}步${hintText}`;
+                slots[idx].appendChild(stepTag);
+            });
+
+            userStep = userSelections.length;
+        }, 800);
+    }
+}
+
+function clearSlot(slotIndex) {
+    if (slotIndex < userSelections.length) {
+        const removedChar = userSelections[slotIndex];
+        userSelections.splice(slotIndex, 1);
+        userStep--;
+
+        const slots = slotsGroup.querySelectorAll(".component-slot");
+        slots.forEach((s, idx) => {
+            if (idx >= userSelections.length) {
+                s.innerText = "";
+                s.classList.remove("filled", "error-slot");
+                const stepTag = document.createElement("span");
+                stepTag.className = "slot-step-tag";
+                const q = questionBank[currentIndex];
+                const hintText = q.stepHints && q.stepHints[idx] ? `(${q.stepHints[idx]})` : "";
+                stepTag.innerText = `第${idx+1}步${hintText}`;
+                s.appendChild(stepTag);
+            }
+        });
+
+        const cards = cardsContainer.querySelectorAll(".component-card");
+        cards.forEach(c => {
+            if (c.innerText === removedChar && c.classList.contains("used")) {
+                c.classList.remove("used");
+            }
+        });
+
+        setFeedback("已撤銷該步驟，請重新選擇部件。", "normal");
+    }
+}
+
+function handleQuestionSuccess(q) {
+    const targetBox = document.getElementById("target-word-box");
+    if (targetBox) {
+        targetBox.innerText = q.char;
+        targetBox.classList.add("completed");
+    }
+    resultPreview.innerText = q.char;
+    resultPreview.classList.add("completed");
+
+    if (learningRecords[q.id].firstCorrect === null) {
+        learningRecords[q.id].firstCorrect = (learningRecords[q.id].errors === 0);
+    }
+
+    setFeedback(`太棒了！你拼出了『${q.char}』！`, "success");
+    btnNext.disabled = false;
+    btnNext.classList.add("next-active");
+
+    playAudioSequence(q.char, q.phrase);
+}
+
+// 語音朗讀系統
+function playAudioSequence(char, phrase) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+
+    const u1 = new SpeechSynthesisUtterance(char);
+    u1.lang = 'zh-TW';
+    u1.rate = 0.9;
+
+    const u2 = new SpeechSynthesisUtterance(phrase);
+    u2.lang = 'zh-TW';
+    u2.rate = 0.9;
+
+    u1.onend = () => {
+        setTimeout(() => {
+            window.speechSynthesis.speak(u2);
+        }, 600);
+    };
+
+    window.speechSynthesis.speak(u1);
+}
+
+function speakText(text) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'zh-TW';
+    u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+}
+
+function replayAudio() {
+    const q = questionBank[currentIndex];
+    playAudioSequence(q.char, q.phrase);
+}
+
+// 導覽按鈕
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        loadQuestion(currentIndex);
+    }
+}
+
+function nextQuestion() {
+    if (currentIndex < questionBank.length - 1) {
+        currentIndex++;
+        loadQuestion(currentIndex);
+    } else {
+        showCongratsModal();
+    }
+}
+
+function showCongratsModal() {
+    const modal = document.getElementById("congrats-modal");
+    const container = document.getElementById("congrats-card-body");
+    const statsBox = document.getElementById("congrats-stats-content");
+
+    let completedCount = 0;
+    let firstTryCount = 0;
+    let needPractice = [];
+
+    Object.keys(learningRecords).forEach(id => {
+        const rec = learningRecords[id];
+        if (rec.firstCorrect !== null) completedCount++;
+        if (rec.firstCorrect === true) firstTryCount++;
+        if (rec.errors > 0) needPractice.push(rec.char);
+    });
+
+    const accuracy = completedCount > 0 ? Math.round((firstTryCount / completedCount) * 100) : 100;
+
+    statsBox.innerHTML = `
+        🎯 總完成題數：<b>${completedCount} / ${questionBank.length}</b> 題<br>
+        🌟 一次就答對：<b>${accuracy}%</b><br>
+        ${needPractice.length > 0 ? `💡 可以再練習的字：<b style="color:var(--error-red)">${needPractice.join('、')}</b>` : '✨ 表現太完美了，完全沒有錯題！'}
+    `;
+
+    createConfetti(container);
+    modal.style.display = "flex";
+    speakText("恭喜你完成所有生字挑戰！太厲害了！");
+}
+
+function createConfetti(parent) {
+    const colors = ['#f4a261', '#e76f51', '#2a9d8f', '#e9c46a', '#457b9d', '#9b59b6'];
+    for (let i = 0; i < 30; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti-piece";
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.left = Math.random() * 90 + 5 + "%";
+        piece.style.animationDelay = Math.random() * 2 + "s";
+        piece.style.animationDuration = (Math.random() * 1.5 + 1.5) + "s";
+        parent.appendChild(piece);
+    }
+}
+
+function restartChallenge() {
+    document.getElementById("congrats-modal").style.display = "none";
+    
+    const confettis = document.querySelectorAll(".confetti-piece");
+    confettis.forEach(c => c.remove());
+
+    currentIndex = 0;
+    learningRecords = {};
+    loadQuestion(0);
+}
+
+function setFeedback(msg, type) {
+    feedbackBanner.innerText = msg;
+    feedbackBanner.className = `feedback-banner ${type}`;
+}
+
+function shuffleArray(arr) {
+    return arr.sort(() => Math.random() - 0.5);
+}
+
+/* 教師設定面板功能 */
+function openTeacherModal() {
+    renderTeacherTable();
+    renderStudentReport();
+    document.getElementById("teacher-modal").style.display = "flex";
+}
+
+function closeTeacherModal() {
+    document.getElementById("teacher-modal").style.display = "none";
+}
+
+function toggleTeacherUnlock() {
+    teacherUnlocked = !teacherUnlocked;
+    document.getElementById("btn-unlock-toggle").innerText = `🔓 解鎖自由跨題：${teacherUnlocked ? "開啟" : "關閉"}`;
+    btnNext.disabled = !teacherUnlocked && (learningRecords[questionBank[currentIndex].id]?.firstCorrect === null);
+}
+
+function renderTeacherTable() {
+    const tbody = document.getElementById("teacher-table-body");
+    tbody.innerHTML = "";
+    questionBank.forEach((q, i) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${i + 1}</td>
+            <td><input value="${q.char}" onchange="updateQData(${i}, 'char', this.value)"></td>
+            <td><input value="${q.zhuyin}" onchange="updateQData(${i}, 'zhuyin', this.value)"></td>
+            <td><input value="${q.phrase}" onchange="updateQData(${i}, 'phrase', this.value)"></td>
+            <td><input value="${q.structure}" onchange="updateQData(${i}, 'structure', this.value)"></td>
+            <td><input value="${q.components.join(',')}" onchange="updateQArray(${i}, 'components', this.value)"></td>
+            <td><input value="${q.distractors.join(',')}" onchange="updateQArray(${i}, 'distractors', this.value)"></td>
+            <td class="status-verified">${q.status}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function updateQData(index, key, value) {
+    questionBank[index][key] = value;
+}
+
+function updateQArray(index, key, value) {
+    questionBank[index][key] = value.split(',').map(s => s.trim());
+}
+
+function renderStudentReport() {
+    const keys = Object.keys(learningRecords);
+    if (keys.length === 0) {
+        document.getElementById("student-report-summary").innerText = "尚無學生作答紀錄。";
+        return;
+    }
+
+    let completed = 0;
+    let firstTryCorrect = 0;
+    let needPractice = [];
+
+    keys.forEach(k => {
+        const rec = learningRecords[k];
+        if (rec.firstCorrect !== null) completed++;
+        if (rec.firstCorrect === true) firstTryCorrect++;
+        if (rec.errors > 0) needPractice.push(rec.char);
+    });
+
+    const rate = completed > 0 ? Math.round((firstTryCorrect / completed) * 100) : 0;
+    document.getElementById("student-report-summary").innerHTML = `
+        <p>已完成：<b>${completed} / ${questionBank.length}</b> 題</p>
+        <p>首次作答正確率：<b>${rate}%</b></p>
+        <p>需要再練習生字：<b style="color:var(--error-red)">${needPractice.join('、') || '無'}</b></p>
+    `;
+}
+
+function resetProgress() {
+    if (confirm("確定要重設所有學生的答題紀錄嗎？")) {
+        learningRecords = {};
+        alert("紀錄已重設。");
+        loadQuestion(currentIndex);
+        renderStudentReport();
+    }
+}
+
+function exportCSV() {
+    let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+    csvContent += "題目ID,生字,總嘗試次數,錯誤次數,首次正確,常見錯誤選項\n";
+
+    Object.keys(learningRecords).forEach(id => {
+        const r = learningRecords[id];
+        csvContent += `${id},${r.char},${r.attempts},${r.errors},${r.firstCorrect ? "是" : "否"},"${r.wrongChoices.join(';')}"\n`;
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "識字學習紀錄.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function exportJSON() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(questionBank, null, 2));
+    const dlAnchorElem = document.createElement('a');
+    dlAnchorElem.setAttribute("href", dataStr);
+    dlAnchorElem.setAttribute("download", "識字題庫.json");
+    dlAnchorElem.click();
+}
+
+function importJSON(event) {
+    const fileReader = new FileReader();
+    fileReader.onload = function(e) {
+        try {
+            const imported = JSON.parse(e.target.result);
+            if (Array.isArray(imported)) {
+                questionBank = imported;
+                alert("題庫匯入成功！");
+                renderTeacherTable();
+                loadQuestion(0);
+            }
+        } catch (err) {
+            alert("JSON 格式不正確。");
+        }
+    };
+    fileReader.readAsText(event.target.files[0]);
+}
+
+window.onload = initGame;
+</script>
+</body>
+</html>
