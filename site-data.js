@@ -109,6 +109,13 @@ window.SITE_DATA = {
               description: "探索花東景色與課文重點",
               type: "拖曳遊戲",
               url: "games/G5L5心智圖.html"
+            },
+            {
+              id: "G5L5-characters2",
+              title: "寫寫生字",
+              description: "與作者漫遊花東，認識生字與詞語",
+              type: "識字遊戲",
+              url: "games/G5L5生字書寫.html"
             }
           ]
         },
@@ -121,11 +128,18 @@ window.SITE_DATA = {
               id: "mindmap",
               title: "互動心智圖",
               description: "認識陸蟹與護蟹行動",
-              type: "拖曳遊戲",
+              type: "識字遊戲",
               url: "games/G5L6心智圖.html"
+            },
+            {
+              id: "G5L6-characters2",
+              title: "寫寫生字",
+              description: "認識陸蟹與護蟹行動，認識生字與詞語",
+              type: "識字遊戲",
+              url: "games/G5L6生字書寫.html"
             }
           ]
-        }
+        },
       ]
     },
 
