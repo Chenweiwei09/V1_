@@ -1,111 +1,448 @@
-/* 編輯這個檔案就能新增教材分類、課次與活動。請保留每個 id 不重複。 */
+/*
+============================================================
+ 學習教室小教具｜網站教材資料設定
+============================================================
+
+
+ 資料架構：
+
+ SITE_DATA
+    │
+    ├── subjects（教材分類）
+    │      │
+    │      ├── lessons（課次）
+    │      │      │
+    │      │      └── activities（教學活動）
+    │      │
+    │      └── ...
+    │
+    └── ...
+
+============================================================
+*/
+//這些東西真的有夠難搞，還好有AI可以整理，希望我自己之後可以自己整理。我是懶惰鬼O~O
+
 window.SITE_DATA = {
+
+  // ========================================================
+  // 一、網站基本資訊
+  // ========================================================
+
   siteTitle: "學習教室小教具",
-  subtitle: "希望這裡的東西可以越來越多，幫助老師與學生更快樂地學習",
+
+  subtitle:
+    "希望這裡的東西可以越來越多，幫助老師與學生更快樂地學習",
+
   footerCredit: "Made with ♡ by weiwei ",
+
+
+  // ========================================================
+  // 二、教材分類
+  // ========================================================
+
   subjects: [
+
+
+    // ======================================================
+    // 【分類 1】南一數學｜六年級
+    // ======================================================
+
     {
-  id: "math6",
-  title: "南一數學六年級",
-  publisher: "南一",
-  subject: "數學",
-  grade: "六年級",
-  emoji: "🧮",
-  tone: "peach",
-  lessons: [
-    {
-      id: "G6U1",
-      title: "第一單元｜質因數分解和短除法",
-      activities: [
+      id: "math6",
+      title: "南一數學六年級",
+      publisher: "南一",
+      subject: "數學",
+      grade: "六年級",
+      emoji: "🧮",
+      tone: "peach",
+
+      lessons: [
+
+        // --------------------------------------------------
+        // 第一單元｜質因數分解和短除法
+        // --------------------------------------------------
+
         {
-          id: "fractions-game",
-          title: "質因數分解和短除法",
-          description: "複習質因數分解的概念，並練習短除法的技巧",
-          type: "互動遊戲",
-          url: "games/G6U1math.html"
+          id: "G6U1",
+          title: "第一單元｜質因數分解和短除法",
+
+          activities: [
+
+            {
+              id: "G6U1-math-game",
+              title: "質因數分解和短除法",
+              description:
+                "複習質因數分解的概念，並練習短除法的技巧。但題目還沒整理好。",
+              type: "互動遊戲",
+              url: "games/G6U1math.html"
+            }
+
+          ]
+        },
+
+
+        // --------------------------------------------------
+        // 第二單元｜分數的意義與加減法
+        // --------------------------------------------------
+
+        {
+          id: "G6U2",
+          title: "第二單元｜分數的意義與加減法",
+
+          activities: [
+
+            {
+              id: "G6U2-math-game",
+              title: "分數的意義與加減法",
+              description:
+                "複習分數的概念，並練習分數的加減法運算。但題目還沒整理好。",
+              type: "互動遊戲",
+              url: "games/G6U2math.html"
+            }
+
+          ]
         }
+
       ]
     },
+
+
+
+    // ======================================================
+    // 【分類 2】南一國語｜五年級
+    // ======================================================
+
     {
-      id: "G6U2",
-      title: "第二單元｜分數的意義與加減法",
-      activities: [
+      id: "chinese5",
+      title: "南一國語五年級",
+      publisher: "南一",
+      subject: "國語",
+      grade: "五年級",
+      emoji: "📖",
+      tone: "sage",
+
+      lessons: [
+
+
+        // --------------------------------------------------
+        // 第一課｜幸福筆記本
+        // --------------------------------------------------
+
         {
-          id: "fractions-game",
-          title: "分數的意義與加減法",
-          description: "複習分數的概念，並練習分數的加減法運算",
-          type: "互動遊戲",
-          url: "games/G6U2math.html"
+          id: "G5L1",
+          title: "第一課｜幸福筆記本",
+
+          activities: []
+        },
+
+
+        // --------------------------------------------------
+        // 第二課｜做人做事做長久
+        // --------------------------------------------------
+
+        {
+          id: "G5L2",
+          title: "第二課｜做人做事做長久",
+
+          activities: []
+        },
+
+
+        // --------------------------------------------------
+        // 第三課｜孔雀錯了
+        // --------------------------------------------------
+
+        {
+          id: "G5L3",
+          title: "第三課｜孔雀錯了",
+
+          activities: []
+        },
+
+
+        // --------------------------------------------------
+        // 第四課｜特別的海
+        // --------------------------------------------------
+
+        {
+          id: "G5L4",
+          title: "第四課｜特別的海",
+
+          activities: [
+
+            // 互動心智圖
+            {
+              id: "G5L4-mindmap",
+              title: "互動心智圖",
+              description:
+                "閱讀心智圖，拖曳答案卡片完成分支",
+              type: "拖曳遊戲",
+              url: "games/G5L4心智圖.html"
+            },
+
+            // 生字闖關
+            {
+              id: "G5L4-character-game",
+              title: "識字大挑戰",
+              description:
+                "18個生字闖關，初階看字、中階組字及進階手寫",
+              type: "識字遊戲",
+              url: "games/G5L4生字.html"
+            },
+
+            // 生字書寫
+            {
+              id: "G5L4-writing-game",
+              title: "寫寫生字",
+              description:
+                "18個生字手寫練習，包含筆順提示與書寫範例",
+              type: "寫字遊戲",
+              url: "games/G5L4生字書寫.html"
+            },
+
+            // PDF 教學簡報
+            {
+              id: "G5L4-slides-preview",
+              title: "第四課教學簡報",
+              description:
+                "線上觀看第四課的教學投影片",
+              type: "教學簡報",
+              url: "materials/G5L4/slides.pdf"
+            },
+
+            // PPT 下載
+            {
+              id: "G5L4-slides-download",
+              title: "下載教學簡報 PPT",
+              description:
+                "下載可編輯的 PowerPoint 簡報",
+              type: "PPT下載",
+              url: "materials/G5L4/G5 L4複習.pptx"
+            }
+
+          ]
+        },
+
+
+        // --------------------------------------------------
+        // 第五課｜漫遊花東
+        // --------------------------------------------------
+
+        {
+          id: "G5L5",
+          title: "第五課｜漫遊花東",
+
+          activities: [
+
+            {
+              id: "G5L5-mindmap",
+              title: "互動心智圖",
+              description:
+                "探索花東景色與課文重點",
+              type: "拖曳遊戲",
+              url: "games/G5L5心智圖.html"
+            },
+
+            {
+              id: "G5L5-character-game",
+              title: "識字大挑戰",
+              description:
+                "第五課生字辨識與練習",
+              type: "識字遊戲",
+              url: "games/G5L5生字.html"
+            },
+
+            {
+              id: "G5L5-writing-game",
+              title: "寫寫生字",
+              description:
+                "第五課生字書寫練習",
+              type: "寫字遊戲",
+              url: "games/G5L5生字書寫.html"
+            }
+
+          ]
+        },
+
+
+        // --------------------------------------------------
+        // 第六課｜護送螃蟹過馬路
+        // --------------------------------------------------
+
+        {
+          id: "G5L6",
+          title: "第六課｜護送螃蟹過馬路",
+
+          activities: [
+
+            {
+              id: "G5L6-mindmap",
+              title: "互動心智圖",
+              description:
+                "認識陸蟹與護蟹行動",
+              type: "拖曳遊戲",
+              url: "games/G5L6心智圖.html"
+            },
+
+            {
+              id: "G5L6-character-game",
+              title: "識字大挑戰",
+              description:
+                "第六課生字辨識與練習",
+              type: "識字遊戲",
+              url: "games/G5L6生字.html"
+            },
+
+            {
+              id: "G5L6-writing-game",
+              title: "寫寫生字",
+              description:
+                "第六課生字書寫練習",
+              type: "寫字遊戲",
+              url: "games/G5L6生字書寫.html"
+            }
+
+          ]
         }
-      ] 
-    }
-  ]
-}, 
-   {id:"chinese5", title:"南一國語五年級", publisher:"南一", subject:"國語", grade:"五年級", emoji:"📖", tone:"sage", lessons:[
-      {id:"G5L1", title:"第一課｜幸福筆記本", activities:[]},
-      {id:"G5L2", title:"第二課｜做人做事做長久", activities:[]},
-      {id:"G5L3", title:"第三課｜孔雀錯了", activities:[]},
 
-{
-  id: "G5L4",
-  title: "第四課｜特別的海",
-  activities: [
-    {
-      id: "mindmap",
-      title: "互動心智圖",
-      description: "閱讀心智圖，拖曳答案卡片完成分支",
-      type: "拖曳遊戲",
-      url: "games/G5L4.html"
+      ]
     },
-    {
-      id: "character-game",
-      title: "識字大挑戰",
-      description: "18個生字闖關，初階看字、中階組字及進階手寫",
-      type: "識字遊戲",
-      url: "games/G5L4生字.html"
-    },
-    {
-      id: "character-game2",
-      title: "寫寫生字",
-      description: "18個生字手寫練習，包含筆順提示與書寫範例",
-      type: "寫字遊戲",
-      url: "games/G5L4生字書寫.html"
-    },
-    {
-      id: "slides-preview",
-      title: "第四課教學簡報",
-      description: "線上觀看第四課的教學投影片",
-      type: "教學簡報",
-      url: "materials/G5L4/slides.pdf"
-    },
-    {
-      id: "slides-download",
-      title: "下載教學簡報 PPT",
-      description: "下載可編輯的 PowerPoint 簡報",
-      type: "PPT下載",
-      url: "materials/G5L4/G5 L4複習.pptx"
-    },
-    {
-      id: "worksheet-preview",
-      title: "第四課學習單",
-      description: "線上瀏覽、列印第四課學習單",
-      type: "PDF學習單",
-      url: "materials/G5L4/G5 L4 複習學習單+語詞.docx"
-    },
-    {
-      id: "worksheet-download",
-      title: "測試版本沒東西",
-      description: "下載 Word 格式，方便教師修改",
-      type: "Word學習單",
-      url: "materials/G5L4/G5 L4 複習學習單+語詞.docx"
-    }
-  ]
-},
 
-      {id:"G5L5", title:"第五課｜漫遊花東", activities:[{id:"mindmap",title:"互動心智圖",description:"探索花東景色與課文重點",type:"拖曳遊戲",url:"games/G5L5.html"}]},
-      {id:"G5L6", title:"第六課｜護送螃蟹過馬路", activities:[{id:"mindmap",title:"互動心智圖",description:"認識陸蟹與護蟹行動",type:"拖曳遊戲",url:"games/G5L6.html"}]}
-    ]},
-    {id:"math1", title:"翰林數學一年級", publisher:"翰林", subject:"數學", grade:"一年級", emoji:"🔢", tone:"sky", lessons:[]},
-    {id:"chinese6", title:"翰林國語六年級", publisher:"翰林", subject:"國語", grade:"六年級", emoji:"✏️", tone:"lilac", lessons:[]}
+
+
+    // ======================================================
+    // 【分類 3】翰林數學｜一年級
+    // ======================================================
+
+    {
+      id: "math1",
+      title: "翰林數學一年級",
+      publisher: "翰林",
+      subject: "數學",
+      grade: "一年級",
+      emoji: "🔢",
+      tone: "sky",
+
+      lessons: []
+
+    },
+
+
+
+    // ======================================================
+    // 【分類 4】翰林國語｜六年級
+    // ======================================================
+
+    {
+      id: "chinese6",
+      title: "翰林國語六年級",
+      publisher: "翰林",
+      subject: "國語",
+      grade: "六年級",
+      emoji: "✏️",
+      tone: "lilac",
+
+      lessons: [
+
+
+        // --------------------------------------------------
+        // 第一課｜遇見自己
+        // --------------------------------------------------
+
+        {
+          id: "G6L1",
+          title: "第一課｜遇見自己",
+
+          activities: [
+
+            {
+              id: "G6L1-mindmap",
+              title: "互動心智圖",
+              description:
+                "這個沒有做QAQ",
+              type: "拖曳遊戲",
+              url: "games/G6L1心智圖.html"
+            },
+
+            {
+              id: "G6L1-character-game",
+              title: "識字大挑戰",
+              description:
+                "還沒有東西唷~",
+              type: "識字遊戲",
+              url: "games/G6L1生字.html"
+            }
+
+          ]
+        },
+
+
+        // --------------------------------------------------
+        // 第二課｜為什麼大家不理我
+        // --------------------------------------------------
+
+        {
+          id: "G6L2",
+          title: "第二課｜為什麼大家不理我",
+
+          activities: [
+
+            {
+              id: "G6L2-character-game",
+              title: "識字大挑戰",
+              description:
+                "第二課生字辨識與練習",
+              type: "識字遊戲",
+              url: "games/G6L2生字.html"
+            },
+
+            {
+              id: "G6L2-writing-game",
+              title: "寫寫生字",
+              description:
+                "第二課生字書寫練習",
+              type: "寫字遊戲",
+              url: "games/G6L2生字書寫.html"
+            }
+
+          ]
+        },
+
+
+        // --------------------------------------------------
+        // 第三課｜孔子說的話
+        // --------------------------------------------------
+
+        {
+          id: "G6L3",
+          title: "第三課｜孔子說的話",
+
+          activities: [
+
+            {
+              id: "G6L3-character-game",
+              title: "識字大挑戰",
+              description:
+                "第三課生字辨識與練習",
+              type: "識字遊戲",
+              url: "games/G6L3生字.html"
+            },
+
+            {
+              id: "G6L3-writing-game",
+              title: "寫寫生字",
+              description:
+                "第三課生字書寫練習",
+              type: "寫字遊戲",
+              url: "games/G6L3生字書寫.html"
+            }
+
+          ]
+        }
+
+      ]
+    }
+
   ]
+
 };
