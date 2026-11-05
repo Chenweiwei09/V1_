@@ -311,7 +311,24 @@ window.SITE_DATA = {
         {
           id: "G5L7",
           title: "第七課｜高第的魔法建築",
-          activities: []
+          activities: [
+            {
+              id: "G5L7-character-game",
+              title: "識字大挑戰",
+              description:
+                "第七課生字辨識與練習",
+              type: "識字遊戲",
+              url: "games/G5L7生字.html"
+            },
+            {
+              id: "G5L7-writing-game",
+              title: "寫寫生字",
+              description:
+                "第七課生字書寫練習",
+              type: "寫字遊戲",
+              url: "games/G5L7生字書寫.html"
+            }             
+          ]
         },
 
         // --------------------------------------------------
@@ -547,7 +564,7 @@ window.SITE_DATA = {
           id: "G6L12",
           title: "第十二課｜存根",
           activities: []
-        },           
+        }           
       ]
     }
 
