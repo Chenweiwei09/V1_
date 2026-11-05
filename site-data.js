@@ -247,7 +247,7 @@ window.SITE_DATA = {
               id: "G5L5-character-game",
               title: "識字大挑戰",
               description:
-                "第五課生字辨識與練習",
+                "目前沒有東西...",
               type: "識字遊戲",
               url: "games/G5L5生字.html"
             },
