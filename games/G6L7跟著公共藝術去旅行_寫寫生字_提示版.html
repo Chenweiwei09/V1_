@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第七課《跟著公共藝術去旅行》生字手寫與訂正挑戰</title>
+    <style>
+        :root {
+            --primary-blue: #1d3557;
+            --accent-blue: #457b9d;
+            --light-blue: #e0f2fe;
+            --selected-blue: #bae6fd;
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --success-green: #2a9d8f;
+            --success-light: #d4edda;
+            --error-red: #e63946;
+            --warning-orange: #f4a261;
+            --warning-light: #fff3cd;
+            --border-radius: 16px;
+            --font-main: "BiauKai", "標楷體", "DFKai-SB", "Microsoft JhengHei", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            font-family: var(--font-main);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+        }
+
+        /* A. 標題與操作列 */
+        .header-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .main-title {
+            font-size: 2.2rem;
+            color: var(--primary-blue);
+            margin: 0;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            background-color: #f1f5f9;
+            padding: 4px;
+            border-radius: 20px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .mode-btn {
+            border: none;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            background: transparent;
+            color: #64748b;
+        }
+
+        .mode-btn.active {
+            background: var(--accent-blue);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .control-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .btn-nav {
+            background-color: #e9ecef;
+            color: var(--primary-blue);
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-nav.next-active {
+            background-color: var(--success-green);
+            color: white;
+            box-shadow: 0 4px 12px rgba(42, 157, 143, 0.4);
+        }
+
+        .progress-pill {
+            background-color: #f1f5f9;
+            color: #2563eb;
+            border: 1px solid #cbd5e1;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2a9d8f);
+            width: 5%;
+            transition: width 0.3s ease;
+        }
+
+        /* B. 生字提示區 */
+        .word-prompt-card {
+            background-color: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .word-display-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .target-word-box {
+            width: 85px;
+            height: 85px;
+            border: 3px dashed #cbd5e1;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3.2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .target-word-box.completed {
+            border: 3px solid var(--success-green);
+            color: var(--success-green);
+            box-shadow: 0 0 15px rgba(42, 157, 143, 0.3);
+            background-color: #f0fdf4;
+        }
+
+        .context-word-box {
+            width: 75px;
+            height: 75px;
+            border: 2px solid #cbd5e1;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.6rem;
+            font-weight: bold;
+            color: #1e293b;
+            background-color: white;
+        }
+
+        .zhuyin-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.1;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2563eb;
+            background-color: #dbeafe;
+            padding: 6px 10px;
+            border-radius: 12px;
+            min-width: 38px;
+            position: relative;
+        }
+
+        .tone-mark {
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+        }
+
+        .instruction-badge {
+            background-color: #fef3c7;
+            color: #92400e;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: 1px solid #fde68a;
+        }
+
+        /* C. 手寫畫布區域 */
+        .writing-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            background-color: #ffffff;
+            border: 4px solid var(--primary-blue);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            touch-action: none;
+        }
+
+        .canvas-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(to right, rgba(203, 213, 225, 0.5) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(203, 213, 225, 0.5) 1px, transparent 1px),
+                linear-gradient(to top right, transparent calc(50% - 1px), rgba(226, 232, 240, 0.8) 1px, transparent calc(50% + 1px)),
+                linear-gradient(to bottom right, transparent calc(50% - 1px), rgba(226, 232, 240, 0.8) 1px, transparent calc(50% + 1px));
+            background-size: 100% 100%;
+            pointer-events: none;
+        }
+
+        #writing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            cursor: crosshair;
+        }
+
+        .writing-tools {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .tool-btn {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tool-btn:hover { background: #e2e8f0; }
+
+        .btn-check-ok {
+            background-color: var(--success-green);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 10px rgba(42, 157, 143, 0.3);
+        }
+
+        .btn-check-fix {
+            background-color: var(--warning-orange);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 10px rgba(244, 162, 97, 0.3);
+        }
+
+        /* E. 即時回饋區 */
+        .feedback-banner {
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .feedback-banner.normal { background-color: #f1f5f9; color: #475569; }
+        .feedback-banner.success { background-color: var(--success-light); color: #0f5132; }
+        .feedback-banner.warning { background-color: var(--warning-light); color: #856404; }
+
+        /* 教師設定與批改面板 */
+        .teacher-toggle-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.2s;
+        }
+        .teacher-toggle-btn:hover { opacity: 1; }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-body {
+            background: white;
+            width: 92%;
+            max-width: 900px;
+            max-height: 88vh;
+            border-radius: 20px;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .gallery-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            background: #f8fafc;
+        }
+
+        .gallery-card img {
+            width: 140px;
+            height: 140px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .gallery-actions {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-mark {
+            padding: 4px 12px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .btn-mark.ok { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .btn-mark.fix { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+
+        /* ========================================================
+           🖨️ PDF 匯出 / 列印專用 CSS 引擎 
+           解決排版破圖、背景遺失、無法列印的問題
+           ======================================================== */
+        #print-area { display: none; } /* 平常隱藏 */
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            body {
+                background-color: white !important;
+                margin: 0; padding: 0;
+            }
+            /* 完全隱藏互動介面 */
+            .game-container, .modal-overlay {
+                display: none !important;
+            }
+            /* 顯示並排版列印區 */
+            #print-area {
+                display: block !important;
+                position: static;
+                width: 100%;
+            }
+            .print-header {
+                text-align: center;
+                color: #1d3557;
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 16px;
+                border-bottom: 2px solid #cbd5e1;
+                padding-bottom: 10px;
+            }
+            .print-stats {
+                background: #f1f5f9;
+                border: 1px solid #cbd5e1;
+                padding: 12px;
+                border-radius: 8px;
+                font-size: 1.1rem;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+            .print-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+            .print-item {
+                border: 2px solid #94a3b8;
+                border-radius: 12px;
+                padding: 12px;
+                text-align: center;
+                background: #ffffff;
+                page-break-inside: avoid; /* 避免表格在換頁時被切斷 */
+            }
+            .print-item-title {
+                font-weight: bold;
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+            .print-item img {
+                width: 120px;
+                height: 120px;
+                border: 1px dashed #cbd5e1;
+                background: #f8fafc;
+                margin-bottom: 8px;
+            }
+            .print-item-status {
+                font-weight: bold;
+                font-size: 1rem;
+            }
+            .status-ok { color: #155724; }
+            .status-fix { color: #856404; }
+            .status-none { color: #64748b; }
+            .print-attempt { margin: 6px 0; border-top: 1px dashed #cbd5e1; padding-top: 6px; font-size: 0.9rem; }
+            .print-hint { font-weight: bold; color: #856404; }
+            .print-grid { grid-template-columns: repeat(2, 1fr); }
+            .print-attempt img { object-fit: contain; }
+
+        }
+        /* 增加提示按鈕與提示文字；其他原版樣式沿用。 */
+        .hint-control-row { width: 100%; max-width: 650px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        #btn-hint { background: #e0f2fe; color: #1d3557; border: 1px solid #93c5fd; }
+        #btn-hint:disabled { opacity: 0.38; cursor: not-allowed; background: #e5e7eb; border-color: #cbd5e1; }
+        .hint-panel { width: 100%; padding: 12px 16px; background: #fff7e6; border: 1px solid #f4c982; border-radius: 12px; color: #7c4b12; font-size: 1.08rem; line-height: 1.6; text-align: center; }
+        .hint-panel[hidden] { display: none !important; }
+        .teacher-hint-setting { padding: 13px 16px; border: 1px solid #cbd5e1; border-radius: 14px; background: #f8fafc; line-height: 1.6; }
+        .teacher-hint-setting input { width: 18px; height: 18px; accent-color: var(--accent-blue); vertical-align: middle; }
+        .hint-setting-note { font-size: 0.9rem; color: #64748b; margin-top: 4px; }
+        .gallery-attempts { width: 100%; font-size: 0.85rem; line-height: 1.55; text-align: left; }
+        .gallery-attempts img { width: 84px; height: 84px; object-fit: contain; }
+        .gallery-attempts .attempt-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-top: 1px solid #dde5ed; }
+        .gallery-attempts .attempt-row > div { flex: 1; }
+        .main-title { text-align: center; padding: 0 45px; }
+        .word-display-row { flex-wrap: wrap; }
+        @media (max-width: 600px) {
+          .main-title { font-size: 1.35rem; padding: 0 30px; }
+          .game-container { padding: 14px; }
+          .control-bar { gap: 6px; flex-wrap: wrap; justify-content: center; }
+          .btn-nav { font-size: 0.9rem; padding: 7px 10px; }
+          .word-display-row { gap: 5px; }
+          .target-word-box { width: 63px; height: 63px; font-size: 2.4rem; }
+          .context-word-box { width: 56px; height: 56px; font-size: 2rem; }
+          .zhuyin-box { font-size: 1rem; min-width: 30px; padding: 4px 6px; }
+          .writing-tools { flex-wrap: wrap; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 互動遊戲本體 -->
+<div class="game-container">
+    <button class="teacher-toggle-btn" onclick="openTeacherModal()" title="教師批改與管理">⚙️</button>
+
+    <div class="header-section">
+        <h1 class="main-title">第七課《跟著公共藝術去旅行》生字手寫與訂正</h1>
+        
+        <div class="mode-selector">
+            <button class="mode-btn active" id="mode-practice" onclick="switchMode('practice')">📝 即時指導模式</button>
+            <button class="mode-btn" id="mode-exam" onclick="switchMode('exam')">⏱️ 測驗模式 (最後統一批改)</button>
+        </div>
+
+        <div class="control-bar">
+            <button class="btn-nav" id="btn-prev" onclick="prevQuestion()">⬅ 上一題</button>
+            <div class="progress-pill" id="progress-text">第 1 / 18 題</div>
+            <button class="btn-nav" id="btn-speak" onclick="replayAudio()">🔊 朗讀</button>
+            <button class="btn-nav" id="btn-next" onclick="nextQuestion()" disabled>下一題 ➡</button>
+        </div>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+    </div>
+
+    <div class="word-prompt-card">
+        <div class="word-display-row" id="word-display-row"></div>
+            <div class="instruction-badge" id="instruction-badge">請在下方米字格中寫出正確生字</div>
+            <div class="hint-control-row">
+                <button class="tool-btn" id="btn-hint" type="button" onclick="showHint()" aria-controls="hint-panel" aria-expanded="false">💡 我需要提示</button>
+                <div id="hint-panel" class="hint-panel" role="status" aria-live="polite" hidden></div>
+            </div>
+    </div>
+
+    <div class="writing-section">
+        <div class="canvas-container">
+            <canvas id="writing-canvas" width="260" height="260"></canvas>
+        </div>
+
+        <div class="writing-tools">
+            <button class="tool-btn" onclick="clearCanvas()">🧹 重新書寫</button>
+            
+            <div id="practice-teacher-controls" style="display: flex; gap: 8px;">
+                <button class="tool-btn btn-check-ok" onclick="teacherGradeCurrent(true)">⭕ 正確 (O)</button>
+                <button class="tool-btn btn-check-fix" onclick="teacherGradeCurrent(false)">❌ 請訂正</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="feedback-banner normal" id="feedback-banner">
+        請用手指或觸控筆在米字格寫字。
+    </div>
+</div>
+
+<!-- 教師批改面板 Modal -->
+<div class="modal-overlay" id="teacher-modal">
+    <div class="modal-body">
+        <h2>⚙️ 教師批改畫廊與學習分析報告</h2>
+        
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid #ddd; padding-bottom: 12px;">
+            <button class="tool-btn btn-check-ok" onclick="generatePrintReport()">🖨️ 匯出完整作答紀錄 (PDF)</button>
+            <button class="tool-btn" style="background:#e0f2fe;" onclick="startCorrectionMode()">✏️ 練習曾經答錯的題目</button>
+            <button class="tool-btn" id="btn-exit-corrections" onclick="exitCorrectionMode()" style="display:none;">↩ 返回全部題目</button>
+            <button class="tool-btn" style="background:#dc2626; color:white;" onclick="resetAll()">🔄 重新開始（清除紀錄）</button>
+        </div>
+
+        <div class="teacher-hint-setting">
+            <label for="exam-hints-toggle"><input type="checkbox" id="exam-hints-toggle" onchange="setExamHintsAllowed(this.checked)"> <strong>測驗模式允許學生使用「💡 提示」</strong></label>
+            <div class="hint-setting-note">預設關閉。未勾選時，學生在測驗模式無法按提示；即時指導模式仍可使用。提示使用情形會記錄在學習報告中。</div>
+        </div>
+        <h3>📊 學生作答狀況統計</h3>
+        <div id="student-summary-box" style="background: #f8fafc; padding: 14px; border-radius: 12px; font-size: 1.1rem; line-height: 1.6;"></div>
+
+        <h3>🖼️ 學生 18 題手寫筆跡批改畫廊</h3>
+        <div class="gallery-grid" id="gallery-grid"></div>
+
+        <button class="tool-btn" onclick="closeTeacherModal()" style="align-self: flex-end; margin-top: 10px;">關閉面板</button>
+    </div>
+</div>
+
+<!-- ==========================================
+     🖨️ 列印專用區域 (平常不可見，只在列印時顯現) 
+     ========================================== -->
+<div id="print-area">
+    <div class="print-header">國小六年級第七課《跟著公共藝術去旅行》生字手寫學習單</div>
+    <div class="print-stats" id="print-stats"></div>
+    <div class="print-grid" id="print-grid"></div>
+</div>
+
+<script>
+// 第七課《跟著公共藝術去旅行》— 六年級 18 字，逐字練習（題號為當次亂序位置）。
+const questionBank = [
+  {id:1,char:'姨',zhuyin:'ㄧˊ',phrase:'阿姨',hint:'這個字用來稱呼母親的姊妹，與女性有關；左邊是「女」部。'},
+  {id:2,char:'雕',zhuyin:'ㄉㄧㄠ',phrase:'雕塑',hint:'這個字可以表示刻出造型。右側有「隹」部，原本與鳥的形象有關。'},
+  {id:3,char:'拓',zhuyin:'ㄊㄚˋ',phrase:'拓印',hint:'把石碑等物品上的文字或圖案印到紙上，需要用手操作；左邊是「扌」（提手旁）。'},
+  {id:4,char:'蒐',zhuyin:'ㄙㄡ',phrase:'蒐集',hint:'這個字表示尋找、聚集東西；上方有「艹」（草字頭）。'},
+  {id:5,char:'蕨',zhuyin:'ㄐㄩㄝˊ',phrase:'蕨類',hint:'這個字指的是一種常生長在陰溼環境的植物，所以有「艹」（草字頭）。'},
+  {id:6,char:'梅',zhuyin:'ㄇㄟˊ',phrase:'梅花鹿',hint:'這個字也指一種早春開花的樹木，因此左邊是「木」部。'},
+  {id:7,char:'鹿',zhuyin:'ㄌㄨˋ',phrase:'梅花鹿',hint:'這個字是一個象形字，像頭上長角、四肢細長的動物。想一想牠的外形。'},
+  {id:8,char:'佇',zhuyin:'ㄓㄨˋ',phrase:'佇立',hint:'這個字表示長時間站著，和人的動作有關；左邊是「亻」（單人旁）。'},
+  {id:9,char:'冽',zhuyin:'ㄌㄧㄝˋ',phrase:'冷冽',hint:'這個字表示寒冷；左邊是「冫」（兩點水），右邊有「列」。'},
+  {id:10,char:'澤',zhuyin:'ㄗㄜˊ',phrase:'光澤',hint:'這個字可指水聚集的地方，也能形容亮亮的表面；左邊是「氵」（三點水）。'},
+  {id:11,char:'錦',zhuyin:'ㄐㄧㄣˇ',phrase:'花團錦簇',hint:'這個字可以形容美麗華貴的絲織品；左邊是「釒」（金字旁），右邊能找到「帛」。'},
+  {id:12,char:'眨',zhuyin:'ㄓㄚˇ',phrase:'眨眨眼',hint:'眼睛快速閉上又張開的動作；左邊是「目」，右邊是「乏」。'},
+  {id:13,char:'鏽',zhuyin:'ㄒㄧㄡˋ',phrase:'不鏽鋼',hint:'金屬表面接觸空氣和水後，可能產生的物質；左邊是「釒」（金字旁）。'},
+  {id:14,char:'鋼',zhuyin:'ㄍㄤ',phrase:'不鏽鋼',hint:'一種硬度高、經過精鍊的金屬材料；左邊是「釒」（金字旁）。'},
+  {id:15,char:'涵',zhuyin:'ㄏㄢˊ',phrase:'意涵',hint:'這個字有包容、容納的意思；左邊是「氵」（三點水）。'},
+  {id:16,char:'銅',zhuyin:'ㄊㄨㄥˊ',phrase:'青銅',hint:'一種帶紅色光澤、能導電的金屬；左邊是「釒」（金字旁），右邊是「同」。'},
+  {id:17,char:'籍',zhuyin:'ㄐㄧˊ',phrase:'書籍',hint:'這個字和書本、登記名冊有關；上面是「⺮」（竹字頭）。'},
+  {id:18,char:'迭',zhuyin:'ㄉㄧㄝˊ',phrase:'更迭',hint:'表示輪流替換、接連發生；外側有「辶」（走之旁）。'}
+];
+
+function shuffleQuestionBank(){
+  for(let i=questionBank.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [questionBank[i],questionBank[j]]=[questionBank[j],questionBank[i]];
+  }
+  if(questionBank[0].id===1){const j=1+Math.floor(Math.random()*(questionBank.length-1));[questionBank[0],questionBank[j]]=[questionBank[j],questionBank[0]];}
+}
+function displayNumber(id){return questionBank.findIndex(q=>q.id===id)+1;}
+
+let currentIndex=0;
+let currentMode='practice';
+let examHintsEnabled=false;
+let teacherUnlocked=false;
+let handwritingData={}; // 按原始 id 存歷次紀錄，不受洗牌影響
+let correctionIds=null;
+let canvas,ctx,isDrawing=false;
+let activeAt=null;
+let canvasImageVersion=0;
+const placeholderImg='data:image/svg+xml;charset=utf-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140"><rect width="140" height="140" fill="#f1f5f9"/><text x="70" y="75" text-anchor="middle" fill="#94a3b8" font-size="16">未作答</text></svg>');
+
+function newDraft(){return {imageData:'',hasInk:false,thinkMs:0,elapsedMs:0,hintUsed:false};}
+function getData(id){if(!handwritingData[id])handwritingData[id]={attempts:[],draft:newDraft()};return handwritingData[id];}
+function lastAttempt(data){return data.attempts.length?data.attempts[data.attempts.length-1]:null;}
+function latestIsCorrect(data){const a=lastAttempt(data);return !!a&&a.result==='ok'&&!data.draft;}
+function activeQuestion(){return correctionIds?questionBank.find(q=>q.id===correctionIds[currentIndex]):questionBank[currentIndex];}
+function activeLength(){return correctionIds?correctionIds.length:questionBank.length;}
+function pauseClock(){
+  if(activeAt===null)return;
+  const q=activeQuestion(),data=q?getData(q.id):null;
+  if(data&&data.draft){const diff=Math.max(0,Date.now()-activeAt);data.draft.elapsedMs+=diff;if(!data.draft.hasInk)data.draft.thinkMs+=diff;}
+  activeAt=null;
+}
+function resumeClock(){activeAt=Date.now();}
+
+window.addEventListener('load',()=>{
+  canvas=document.getElementById('writing-canvas');ctx=canvas.getContext('2d');
+  shuffleQuestionBank();setupCanvasEvents();loadQuestion(0,false);
+});
+
+function setupCanvasEvents(){
+  ctx.lineWidth=8;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#1d3557';
+  const pos=e=>{const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height};};
+  canvas.addEventListener('pointerdown',e=>{
+    if(e.button!==0&&e.pointerType==='mouse')return;
+    const q=activeQuestion(),data=getData(q.id);
+    if(!data.draft){pauseClock();data.draft=newDraft();resumeClock();ctx.clearRect(0,0,canvas.width,canvas.height);renderWordPrompt(q,false);}
+    if(!data.draft.hasInk){pauseClock();data.draft.hasInk=true;resumeClock();}
+    isDrawing=true;canvas.setPointerCapture?.(e.pointerId);const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+0.1,p.y+0.1);ctx.stroke();saveCurrentCanvas();
+  });
+  canvas.addEventListener('pointermove',e=>{if(!isDrawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();saveCurrentCanvas();});
+  const stop=()=>{isDrawing=false;};
+  canvas.addEventListener('pointerup',stop);canvas.addEventListener('pointercancel',stop);
+}
+function saveCurrentCanvas(){const data=getData(activeQuestion().id);if(data.draft){data.draft.hasInk=true;data.draft.imageData=canvas.toDataURL('image/png');}}
+function clearCanvas(){
+  const data=getData(activeQuestion().id);
+  pauseClock();data.draft=newDraft();
+  canvasImageVersion++;ctx.clearRect(0,0,canvas.width,canvas.height);
+  renderWordPrompt(activeQuestion(),false);setFeedback('請重新書寫；之前已批改的筆跡仍保留在老師的紀錄中。','normal');
+  updateHintView();updateNav();resumeClock();
+}
+function renderCanvas(imageData){
+  const version=++canvasImageVersion;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(!imageData)return;
+  const img=new Image();img.onload=()=>{if(version===canvasImageVersion)ctx.drawImage(img,0,0,canvas.width,canvas.height);};img.src=imageData;
+}
+function loadQuestion(index,preserve=true){
+  if(preserve)pauseClock();
+  currentIndex=index;
+  const q=activeQuestion(),data=getData(q.id);
+  const isReview=latestIsCorrect(data);
+  const length=activeLength();
+  document.getElementById('progress-text').innerText=correctionIds?`錯題 ${index+1} / ${length}`:`第 ${index+1} / ${length} 題`;
+  document.getElementById('progress-fill').style.width=`${(index+1)/length*100}%`;
+  document.getElementById('btn-prev').disabled=index===0;
+  renderWordPrompt(q,isReview);
+  renderCanvas(data.draft?data.draft.imageData:lastAttempt(data)?.imageData||'');
+  updateNav();updateHintView();
+  if(isReview){setFeedback('✨ 此題已完成。若要再次練習，請按「重新書寫」。','success');}
+  else if(lastAttempt(data)?.result==='fix'){setFeedback('💡 這一題需要訂正，請再寫一次。','warning');}
+  else{setFeedback('請用手指或觸控筆在米字格寫字。','normal');}
+  resumeClock();
+}
+function updateNav(){
+  const q=activeQuestion(),data=getData(q.id),isDone=latestIsCorrect(data);
+  const next=document.getElementById('btn-next');
+  next.disabled=currentMode==='practice'&&!isDone&&!teacherUnlocked;
+  next.classList.toggle('next-active',!next.disabled);
+  document.getElementById('btn-exit-corrections').style.display=correctionIds?'':'none';
+}
+function renderWordPrompt(q,isCompleted){
+  const row=document.getElementById('word-display-row');row.innerHTML='';
+  for(const ch of Array.from(q.phrase)){
+    if(ch===q.char){
+      const target=document.createElement('div');target.className='target-word-box'+(isCompleted?' completed':'');target.innerText=isCompleted?q.char:'?';row.appendChild(target);
+      const phon=document.createElement('div');phon.className='zhuyin-box';renderZhuyinInto(q.zhuyin,phon);row.appendChild(phon);
+    }else{const context=document.createElement('div');context.className='context-word-box';context.innerText=ch;row.appendChild(context);}
+  }
+}
+function renderZhuyinInto(str,container){
+  const tones=['ˊ','ˇ','ˋ','˙'];let main='',tone='';
+  for(const c of str){if(tones.includes(c))tone=c;else if(c!==' ')main+=c+'<br>';}
+  container.innerHTML=main;
+  if(tone){const span=document.createElement('span');span.className='tone-mark';span.innerText=tone;container.appendChild(span);}
+}
+
+function canUseHint(){return currentMode==='practice'||(currentMode==='exam'&&examHintsEnabled);}
+function updateHintView(){
+  const button=document.getElementById('btn-hint'),panel=document.getElementById('hint-panel');
+  const permitted=canUseHint();button.disabled=!permitted;
+  button.title=permitted?'按下會顯示本題的字義／部首線索':'測驗模式的提示已由老師關閉';
+  const draft=getData(activeQuestion().id).draft;
+  const show=permitted&&!!draft?.hintUsed;
+  panel.hidden=!show;panel.textContent=show?'💡 '+activeQuestion().hint:'';
+  button.setAttribute('aria-expanded',String(show));
+}
+function showHint(){
+  if(!canUseHint())return; // 不能只靠 disabled 屬性限制
+  const q=activeQuestion(),data=getData(q.id);
+  if(!data.draft)return; // 已完成的舊題不增加提示紀錄；重新書寫後可再要求
+  data.draft.hintUsed=true;
+  updateHintView();
+}
+function setExamHintsAllowed(enabled){
+  examHintsEnabled=Boolean(enabled);document.getElementById('exam-hints-toggle').checked=examHintsEnabled;
+  updateHintView();
+}
+function switchMode(mode){
+  if(mode!== 'practice'&&mode!=='exam')return;
+  pauseClock();currentMode=mode;
+  document.getElementById('mode-practice').classList.toggle('active',mode==='practice');
+  document.getElementById('mode-exam').classList.toggle('active',mode==='exam');
+  document.getElementById('practice-teacher-controls').style.display=mode==='practice'?'flex':'none';
+  loadQuestion(currentIndex,false); // 會重新檢查能否顯示原本提示
+}
+function addAttempt(qId,result){
+  const data=getData(qId);if(!data.draft?.hasInk)return false;
+  if(activeQuestion()?.id===qId)pauseClock();
+  const d=data.draft;
+  const attempt={imageData:d.imageData,result,thinkSeconds:Math.round(d.thinkMs/1000),totalSeconds:Math.round(d.elapsedMs/1000),hintUsed:Boolean(d.hintUsed),mode:currentMode,gradedAt:new Date().toLocaleString('zh-TW')};
+  data.attempts.push(attempt);data.draft=result==='ok'?null:newDraft();
+  if(activeQuestion()?.id===qId)resumeClock();
+  return true;
+}
+function teacherGradeCurrent(isCorrect){
+  const q=activeQuestion(),data=getData(q.id);
+  if(!data.draft?.hasInk){setFeedback('請先在米字格寫字，再由老師批改。','warning');return;}
+  addAttempt(q.id,isCorrect?'ok':'fix');
+  if(isCorrect){renderWordPrompt(q,true);setFeedback('⭕ 批改完成！寫對了！','success');playAudioSequence(q.char,q.phrase);}
+  else{renderCanvas('');renderWordPrompt(q,false);setFeedback('❌ 請再試著寫一次。','warning');}
+  updateNav();updateHintView();
+}
+function speakText(text){if(!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='zh-TW';u.rate=0.87;window.speechSynthesis.speak(u);}
+function playAudioSequence(char,phrase){if(!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const u1=new SpeechSynthesisUtterance(char),u2=new SpeechSynthesisUtterance(phrase);u1.lang='zh-TW';u2.lang='zh-TW';u1.rate=u2.rate=0.87;u1.onend=()=>window.speechSynthesis.speak(u2);window.speechSynthesis.speak(u1);}
+function replayAudio(){const q=activeQuestion();speakText(q.phrase);}
+function prevQuestion(){if(currentIndex>0)loadQuestion(currentIndex-1);}
+function nextQuestion(){if(currentIndex<activeLength()-1)loadQuestion(currentIndex+1);else openTeacherModal();}
+function setFeedback(text,type){const e=document.getElementById('feedback-banner');e.innerText=text;e.className='feedback-banner '+type;}
+
+function openTeacherModal(){pauseClock();renderGallery();renderStudentSummary();document.getElementById('teacher-modal').style.display='flex';}
+function closeTeacherModal(){document.getElementById('teacher-modal').style.display='none';resumeClock();}
+function formatAttempt(a,index){return `第 ${index+1} 次：${a.result==='ok'?'✅ 正確':'❌ 訂正'}｜思考 ${a.thinkSeconds} 秒｜作答 ${a.totalSeconds} 秒｜${a.hintUsed?'💡 使用提示':'未使用提示'}`;}
+function renderGallery(){
+  const grid=document.getElementById('gallery-grid');grid.innerHTML='';
+  questionBank.forEach(q=>{
+    const d=getData(q.id),last=lastAttempt(d),card=document.createElement('div');card.className='gallery-card';
+    const title=document.createElement('div');title.style.cssText='font-weight:bold;font-size:1.1rem';title.textContent=`第 ${displayNumber(q.id)} 題：${q.char}（${q.phrase}）`;card.appendChild(title);
+    const img=document.createElement('img');img.src=d.draft?.hasInk?d.draft.imageData:last?.imageData||placeholderImg;img.alt='最新一次手寫筆跡';card.appendChild(img);
+    const status=document.createElement('div');status.style.cssText='font-size:0.9rem';status.textContent=last?`${last.result==='ok'?'✅ 最近答對':'🟧 最近需訂正'}｜共 ${d.attempts.length} 次`:'尚未批改';card.appendChild(status);
+    if(d.draft?.hasInk){const pending=document.createElement('div');pending.textContent='✏️ 尚有待批改的新筆跡';pending.style.cssText='color:#854d0e;font-size:0.85rem';card.appendChild(pending);}
+    const buttons=document.createElement('div');buttons.className='gallery-actions';
+    for(const [txt,grade,cls] of [['⭕ 正確','ok','ok'],['❌ 訂正','fix','fix']]){
+      const b=document.createElement('button');b.className='btn-mark '+cls;b.innerText=txt;b.onclick=()=>markGalleryItem(q.id,grade);buttons.appendChild(b);
+    }
+    card.appendChild(buttons);
+    const history=document.createElement('div');history.className='gallery-attempts';
+    d.attempts.forEach((a,i)=>{
+      const line=document.createElement('div');line.className='attempt-row';
+      const mini=document.createElement('img');mini.src=a.imageData;mini.alt=`第 ${i+1} 次筆跡`;
+      const txt=document.createElement('div');txt.textContent=formatAttempt(a,i);
+      line.append(mini,txt);history.appendChild(line);
+    });
+    card.appendChild(history);grid.appendChild(card);
+  });
+}
+function markGalleryItem(qId,status){
+  const d=getData(qId),q=questionBank.find(x=>x.id===qId);
+  if(d.draft?.hasInk){addAttempt(qId,status);}
+  else if(d.attempts.length){d.attempts[d.attempts.length-1].result=status;}
+  else{alert(`第 ${displayNumber(qId)} 題尚無手寫筆跡，無法批改。`);return;}
+  if(activeQuestion()?.id===qId){renderWordPrompt(q,latestIsCorrect(d));updateHintView();updateNav();}
+  renderGallery();renderStudentSummary();
+}
+function stats(){
+  let firstCorrect=0,firstIndependent=0,latestCorrect=0,hintQuestions=0,wrongIds=[],independentCorrect=0,started=0;
+  questionBank.forEach(q=>{
+    const a=getData(q.id).attempts;if(a.length)started++;
+    if(a[0]?.result==='ok'){firstCorrect++;if(!a[0].hintUsed)firstIndependent++;}
+    if(a.at(-1)?.result==='ok'){latestCorrect++;if(!a.at(-1).hintUsed&&a.every(x=>!x.hintUsed))independentCorrect++;}
+    if(a.some(x=>x.result==='fix'))wrongIds.push(q.id);
+    if(a.some(x=>x.hintUsed)||getData(q.id).draft?.hintUsed)hintQuestions++;
+  });
+  const pct=n=>Math.round(n/questionBank.length*100);
+  return {firstCorrect,firstIndependent,latestCorrect,independentCorrect,wrongIds,hintQuestions,started,pct};
+}
+function renderStudentSummary(){
+  const s=stats();document.getElementById('student-summary-box').innerHTML=`
+    🎯 第一次作答正確率：<b>${s.pct(s.firstCorrect)}%</b>（${s.firstCorrect} / 18）<br>
+    🌟 第一次「未用提示」正確率：<b>${s.pct(s.firstIndependent)}%</b>（${s.firstIndependent} / 18）<br>
+    ✅ 訂正後目前答對率：<b>${s.pct(s.latestCorrect)}%</b>（${s.latestCorrect} / 18）<br>
+    💡 曾使用提示：<b>${s.hintQuestions}</b> 題；提示後答對不列入完全獨立完成。<br>
+    ❌ 曾答錯題目：<b>${s.wrongIds.length?s.wrongIds.map(id=>`${displayNumber(id)}.${questionBank.find(q=>q.id===id).char}`).join('、'):'無'}</b><br>
+    ✏️ 已批改題數：${s.started} / 18。<br>
+    ⏱️ 提示、思考與作答秒數，以及第幾次成功，請見下方每題紀錄與 PDF 報告。`;
+}
+function startCorrectionMode(){
+  const wrong=questionBank.filter(q=>getData(q.id).attempts.some(x=>x.result==='fix')).map(q=>q.id);
+  if(!wrong.length){alert('目前沒有曾答錯的題目。');return;}
+  pauseClock();correctionIds=wrong;currentIndex=0;
+  wrong.forEach(id=>{const data=getData(id);if(!data.draft?.hasInk)data.draft=newDraft();});
+  closeTeacherModal();loadQuestion(0,false);
+}
+function exitCorrectionMode(){
+  if(!correctionIds)return;
+  const id=activeQuestion().id;pauseClock();correctionIds=null;
+  const index=questionBank.findIndex(q=>q.id===id);loadQuestion(index>=0?index:0,false);
+  document.getElementById('btn-exit-corrections').style.display='none';
+  closeTeacherModal();
+}
+function generatePrintReport(){
+  pauseClock();const s=stats(),statsBox=document.getElementById('print-stats'),grid=document.getElementById('print-grid');
+  const wrong=s.wrongIds.map(id=>`${displayNumber(id)}.${questionBank.find(q=>q.id===id).char}`).join('、')||'無';
+  statsBox.innerHTML=`<b>學習評量摘要：</b><br>第一次答對率：${s.pct(s.firstCorrect)}%（${s.firstCorrect}/18）｜未看提示首次答對：${s.pct(s.firstIndependent)}%（${s.firstIndependent}/18）<br>目前答對率：${s.pct(s.latestCorrect)}%（${s.latestCorrect}/18）｜曾使用提示：${s.hintQuestions} 題<br>曾答錯題目：${wrong}<br>日期：${new Date().toLocaleString('zh-TW')}`;
+  grid.innerHTML='';questionBank.forEach(q=>{
+    const data=getData(q.id),item=document.createElement('div');item.className='print-item';
+    const t=document.createElement('div');t.className='print-item-title';t.textContent=`${displayNumber(q.id)}. ${q.char}（${q.phrase}）`;item.appendChild(t);
+    if(data.attempts.length){
+      data.attempts.forEach((a,i)=>{
+        const wrap=document.createElement('div');wrap.className='print-attempt';
+        const img=document.createElement('img');img.src=a.imageData;img.alt=`第 ${i+1} 次書寫筆跡`;
+        const details=document.createElement('div');details.className='print-item-status';details.textContent=formatAttempt(a,i);
+        wrap.append(img,details);item.appendChild(wrap);
+      });
+      const firstWin=data.attempts.findIndex(a=>a.result==='ok');
+      const summary=document.createElement('div');summary.textContent=firstWin<0?'尚未寫對':`第 ${firstWin+1} 次成功`;summary.style.fontWeight='bold';item.appendChild(summary);
+    }else{
+      const img=document.createElement('img');img.src=placeholderImg;item.append(img);
+      const text=document.createElement('div');text.innerText='尚未批改';item.appendChild(text);
+    }
+    if(data.draft?.hasInk){const draft=document.createElement('div');draft.textContent=`尚有未批改筆跡${data.draft.hintUsed?'（已看提示）':''}`;item.appendChild(draft);}
+    grid.appendChild(item);
+  });
+  closeTeacherModal();setTimeout(()=>window.print(),320);
+}
+function resetAll(){
+  if(!confirm('確定要清除本次所有筆跡、批改與提示紀錄，重新洗牌開始嗎？'))return;
+  pauseClock();handwritingData={};correctionIds=null;examHintsEnabled=false;teacherUnlocked=false;
+  document.getElementById('exam-hints-toggle').checked=false;shuffleQuestionBank();
+  currentMode='practice';document.getElementById('mode-practice').classList.add('active');document.getElementById('mode-exam').classList.remove('active');
+  document.getElementById('practice-teacher-controls').style.display='flex';
+  document.getElementById('teacher-modal').style.display='none';loadQuestion(0,false);
+}
+</script>
+</body>
+</html>
