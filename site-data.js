@@ -533,6 +533,14 @@ window.SITE_DATA = {
                 "第七課生字書寫練習_提示板",
               type: "寫字遊戲",
               url: "games/G6L7跟著公共藝術去旅行_寫寫生字_提示版.html"
+            },
+            {
+              id: "G6L7-game",
+              title: "視覺小說",
+              description:
+                "第七課課文文意理解",
+              type: "視覺小說",
+              url: "games/G6L7文意理解.html"
             }
           ]
         },
