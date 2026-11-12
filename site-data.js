@@ -540,7 +540,7 @@ window.SITE_DATA = {
               description:
                 "第七課課文文意理解",
               type: "視覺小說",
-              url: "games/G6L7文意理解.html"
+              url: "games/G6L7文意理解_V2.html"
             }
           ]
         },
