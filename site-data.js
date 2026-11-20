@@ -395,7 +395,22 @@ window.SITE_DATA = {
       emoji: "🔢",
       tone: "sky",
 
-      lessons: []
+      lessons: [
+
+      {
+          id: "G1U6U7",
+          title: "生活的加減法",
+          activities: [
+          {
+          id: "G1U6U7-classr-game",
+          title: "生活加減法",
+          description:"10以內的加法與減法",
+          type: "課程互動",
+          url: "games/G1生活加減樂.html" 
+          }
+          ]  
+      }
+      ]
 
     },
 
