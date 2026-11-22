@@ -407,6 +407,13 @@ window.SITE_DATA = {
           description:"10以內的加法與減法",
           type: "課程互動",
           url: "games/G1生活加減樂.html" 
+          },
+          {
+          id: "G1U6U7-classr-game",
+          title: "生活加減法_V5",
+          description:"10以內的加法與減法",
+          type: "課程互動",
+          url: "games/G1生活加減樂_V5.html" 
           }
           ]  
       }
