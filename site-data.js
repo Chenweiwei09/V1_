@@ -420,7 +420,7 @@ window.SITE_DATA = {
           title: "生活加減法_V6",
           description:"10以內的加法與減法",
           type: "課程互動",
-          url: "games/G1生活加減樂_V6.html" 
+          url: "games/生活加減樂_V6.html" 
           }
           ]  
       }
